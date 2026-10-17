@@ -34,6 +34,18 @@ grok plugin install indranilbanerjee/cutforge
 
 > If CutForge saves you a week of editing, [give it a star ⭐](https://github.com/indranilbanerjee/cutforge/stargazers). It is the single thing that helps other people find it.
 
+## See it in action
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ca6da4a9-0d2d-431d-9e9d-c9afe8e62d67" alt="CutForge demo preview: a title card, a lamp, a sea at sunrise, a photo framed as a print with a hand-drawn circle and an ANCHORED stamp, a triptych of prints, three phone clips side by side, and closing cards that read Story first, Facts checked, Sound leads picture" width="480">
+</p>
+
+The full minute, with sound:
+
+https://github.com/user-attachments/assets/6f415954-80c1-493b-bace-5312d3a88249
+
+*The Lamp* is the demo CutForge renders on a new machine to prove the toolchain (step 2 of the [Quick Start](#quick-start)). It is made from procedural media, so there are no real photos or faces in it. No voice key was used, so the narration runs as captions over the score and sound effects; connect a voice provider and the same timeline carries the spoken lines. This render finished with 1,484 frames matching the timeline, a clean decode, 0 audio flags and -16.5 LUFS.
+
 ## Try this first
 
 Install, then ask in plain words. Each of these requests reaches the right skill.
