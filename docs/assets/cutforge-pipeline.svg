@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 400" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>A CutForge project, start to finish</title>
+  <desc>Brief, archive, story, look test, storyboard and photo map, voice; then art and sound, build, QC, delivery and revision rounds that re-render only what changed. Amber steps are where you decide: the brief, the story, the look, the photo map, the budget and your notes.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a6577"/>
+    </marker>
+  </defs>
+  <text x="590" y="30" text-anchor="middle" font-size="17" font-weight="700" fill="#8a94a4">A CutForge project: your material in, a verified film out, and you decide every step that shapes the story or costs money</text>
+  <g font-size="13" text-anchor="middle">
+    <!-- row 1, left to right -->
+    <rect x="30" y="64" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="115" y="91" font-weight="700" fill="#1f2733">Brief</text>
+    <text x="115" y="113" font-size="11.5" fill="#5a6577">the questions that</text>
+    <text x="115" y="131" font-size="11.5" fill="#5a6577">decide the film</text>
+
+    <rect x="220" y="64" width="170" height="92" rx="10" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="305" y="91" font-weight="700" fill="#1f2733">Archive</text>
+    <text x="305" y="113" font-size="11.5" fill="#5a6577">real dates, real sound,</text>
+    <text x="305" y="131" font-size="11.5" fill="#5a6577">faces you name</text>
+
+    <rect x="410" y="64" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="495" y="91" font-weight="700" fill="#1f2733">Story</text>
+    <text x="495" y="113" font-size="11.5" fill="#5a6577">arcs, spine, script:</text>
+    <text x="495" y="131" font-size="11.5" fill="#5a6577">you approve</text>
+
+    <rect x="600" y="64" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="685" y="91" font-weight="700" fill="#1f2733">Look test</text>
+    <text x="685" y="113" font-size="11.5" fill="#5a6577">the hardest scene first:</text>
+    <text x="685" y="131" font-size="11.5" fill="#5a6577">is this the level?</text>
+
+    <rect x="790" y="64" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="875" y="91" font-weight="700" fill="#1f2733">Storyboard</text>
+    <text x="875" y="113" font-size="11.5" fill="#5a6577">every shot and face:</text>
+    <text x="875" y="131" font-size="11.5" fill="#5a6577">you tick it once</text>
+
+    <rect x="980" y="64" width="170" height="92" rx="10" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="1065" y="91" font-weight="700" fill="#1f2733">Voice</text>
+    <text x="1065" y="113" font-size="11.5" fill="#5a6577">every line checked</text>
+    <text x="1065" y="131" font-size="11.5" fill="#5a6577">by speech-to-text</text>
+
+    <!-- row 2, right to left -->
+    <rect x="980" y="232" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="1065" y="259" font-weight="700" fill="#1f2733">Art + sound</text>
+    <text x="1065" y="281" font-size="11.5" fill="#5a6577">quote first; AI only</text>
+    <text x="1065" y="299" font-size="11.5" fill="#5a6577">where no camera was</text>
+
+    <rect x="790" y="232" width="170" height="92" rx="10" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="875" y="259" font-weight="700" fill="#1f2733">Build</text>
+    <text x="875" y="281" font-size="11.5" fill="#5a6577">timeline, stills, chapters,</text>
+    <text x="875" y="299" font-size="11.5" fill="#5a6577">mix and grade</text>
+
+    <rect x="600" y="232" width="170" height="92" rx="10" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="685" y="259" font-weight="700" fill="#1f2733">QC</text>
+    <text x="685" y="281" font-size="11.5" fill="#5a6577">9 layers + reviewer</text>
+    <text x="685" y="299" font-size="11.5" fill="#5a6577">agents, then you watch</text>
+
+    <rect x="410" y="232" width="170" height="92" rx="10" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="495" y="259" font-weight="700" fill="#1f2733">Delivery</text>
+    <text x="495" y="281" font-size="11.5" fill="#5a6577">encoded per screen,</text>
+    <text x="495" y="299" font-size="11.5" fill="#5a6577">verified on arrival</text>
+
+    <rect x="220" y="232" width="170" height="92" rx="10" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="305" y="259" font-weight="700" fill="#1f2733">Revisions</text>
+    <text x="305" y="281" font-size="11.5" fill="#5a6577">your notes mapped to</text>
+    <text x="305" y="299" font-size="11.5" fill="#5a6577">shots, fixed, re-checked</text>
+
+    <!-- legend -->
+    <rect x="34" y="246" width="18" height="14" rx="3" fill="#f9efe2" stroke="#d9b389"/>
+    <text x="60" y="258" font-size="12" text-anchor="start" fill="#8a94a4">you decide here</text>
+    <rect x="34" y="274" width="18" height="14" rx="3" fill="#e5f1ee" stroke="#9cc5bb"/>
+    <text x="60" y="286" font-size="12" text-anchor="start" fill="#8a94a4">checked by tools</text>
+  </g>
+  <g stroke="#5a6577" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <path d="M 200 110 L 218 110"/>
+    <path d="M 390 110 L 408 110"/>
+    <path d="M 580 110 L 598 110"/>
+    <path d="M 770 110 L 788 110"/>
+    <path d="M 960 110 L 978 110"/>
+    <path d="M 1065 156 L 1065 230"/>
+    <path d="M 980 278 L 962 278"/>
+    <path d="M 790 278 L 772 278"/>
+    <path d="M 600 278 L 582 278"/>
+    <path d="M 410 278 L 392 278"/>
+    <path d="M 305 324 L 305 360 L 875 360 L 875 326"/>
+  </g>
+  <text x="590" y="384" text-anchor="middle" font-size="12" fill="#8a94a4">next version: only the chapters a note touches are re-rendered</text>
+</svg>

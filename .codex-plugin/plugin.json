@@ -1,0 +1,43 @@
+{
+  "name": "cutforge",
+  "version": "1.0.0",
+  "description": "Open-source video creation and editing plugin: your photos, clips and voice notes become story-led films, brand films, explainers and ads. 13 skills, 4 reviewer agents, a tested Remotion engine. Runs on Claude Code, Codex, Cursor, Antigravity.",
+  "author": {
+    "name": "Indranil Banerjee",
+    "url": "https://github.com/indranilbanerjee"
+  },
+  "homepage": "https://github.com/indranilbanerjee/cutforge",
+  "repository": "https://github.com/indranilbanerjee/cutforge",
+  "license": "MIT",
+  "keywords": [
+    "video-editing",
+    "video-creation",
+    "storytelling",
+    "storyboard",
+    "remotion",
+    "voiceover",
+    "sound-design",
+    "brand-film",
+    "explainer-video",
+    "agent-skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CutForge",
+    "shortDescription": "Open-source video creation and editing plugin: your photos, clips and voice notes become story-led films, brand films, explainers and ads. 13 skills, 4 reviewer agents, a tested Remotion engine. Runs on Claude Code, Codex, Cursor, Antigravity.",
+    "longDescription": "From raw footage to final cut. 13 skills + 4 reviewer agents + a tested engine (Remotion, ffmpeg and Python: 48 tools). CutForge runs the whole job: the brief, archive research (real capture dates, face clusters the client names, semantic search, the real sound inside phone clips), story design with arcs and a beat map, a look test and a data-driven storyboard, narration in any voice (cloned only with the owner's consent) verified line by line by speech-to-text, music-first sound design with a cue sheet that follows the timeline, AI art only where no camera was (never on real faces), chunked resumable renders where a fix re-renders one chapter, nine QC layers, delivery encodes, verified transfers and revision rounds. Family and milestone films, tributes, weddings, brand films, explainers, ads, and pharma and BFSI videos with India-first compliance. Portable across Claude Code, Codex, Cursor and Antigravity via the Agent Skills open standard.",
+    "developerName": "Indranil Banerjee",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://indranil.in",
+    "defaultPrompt": [
+      "Make a 10-minute film from our family photos for a birthday.",
+      "Go through this photo library and find the best moments of 2024.",
+      "Write the story and storyboard for a 60-second brand film.",
+      "Here are my notes on the cut: fix the abrupt stops and the order at the start."
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+# Hermes Agent native plugin manifest.
+#
+# This file is read ONLY by Hermes Agent (Nous Research). Claude Code, Cowork,
+# OpenAI Codex, Cursor, GitHub Copilot CLI, Google Antigravity, and OpenClaw
+# all read their own manifest paths and ignore this file. See README.md
+# "Supported surfaces" for per-platform install commands.
+#
+# Spec source: https://hermes-agent.nousresearch.com/docs/guides/build-a-hermes-plugin
+# Tested against: Hermes Desktop v0.15.2 (June 2026 public preview)
+#
+# Install for Hermes users:
+#   hermes plugins install indranilbanerjee/cutforge
+
+name: cutforge
+version: 1.0.0
+description: >-
+  Open-source video creation and editing plugin. 13 skills and 4 reviewer
+  agents turn photos, clips and voice notes into story-led films, brand
+  films, explainers and ads, with a tested Remotion engine. Native on Hermes.
+author: Indranil Banerjee
+license: MIT
+homepage: https://github.com/indranilbanerjee/cutforge
+
+provides_tools: []
+provides_hooks: []
+requires_env: []
+# Every credential below is OPTIONAL: nothing is required to install, the placeholder voice and the whole
+# render/mix/QC pipeline run without any key, and a tool that needs one says so and stops. Keys are read from
+# the environment or a key file named in the project's config.json, never from the chat.
+optional_env:
+  - name: SARVAM_API_KEY
+    description: Sarvam text-to-speech and speech-to-text (Indian languages; narration and its verification)
+    secret: true
+  - name: ELEVENLABS_API_KEY
+    description: ElevenLabs text-to-speech (alternative narration provider)
+    secret: true
+  - name: OPENAI_API_KEY
+    description: OpenAI speech and transcription (alternative narration and verification provider)
+    secret: true
+  - name: WAVESPEED_API_KEY
+    description: WaveSpeed hosted AI image and image-to-video models (only for art where no camera was; budget-gated)
+    secret: true
+  - name: CUTFORGE_CONFIG
+    description: Path to a project's config.json when a tool runs outside the project folder (not a secret)
+    secret: false

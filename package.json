@@ -1,0 +1,47 @@
+{
+  "name": "@indranilbanerjee/cutforge",
+  "version": "1.0.0",
+  "description": "Open-source video creation and editing plugin: story-led films, brand films, explainers and ads from your own footage. 13 skills, 4 agents, a tested Remotion engine. Native on Claude Code, Cowork, Codex, Cursor, Copilot CLI, Antigravity, Hermes Agent, OpenClaw.",
+  "license": "MIT",
+  "homepage": "https://github.com/indranilbanerjee/cutforge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indranilbanerjee/cutforge.git"
+  },
+  "author": {
+    "name": "Indranil Banerjee",
+    "url": "https://indranil.in"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-plugin",
+    "agent-skills",
+    "openai-codex",
+    "cursor-plugin",
+    "copilot-cli-plugin",
+    "google-antigravity",
+    "hermes-plugin",
+    "openclaw-plugin",
+    "video",
+    "video-editing",
+    "remotion",
+    "storytelling",
+    "voiceover",
+    "sound-design"
+  ],
+  "openclaw": {
+    "type": "bundle",
+    "extensions": [
+      "./skills/"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "build": {
+      "openclawVersion": "2026.3.24-beta.2"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "cutforge-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "timeline": "python film/timeline.py",
+    "still": "node render.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.528",
+    "@remotion/cli": "4.0.528",
+    "@remotion/noise": "4.0.528",
+    "@remotion/renderer": "4.0.528",
+    "harfbuzzjs": "1.6.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.528"
+  }
+}

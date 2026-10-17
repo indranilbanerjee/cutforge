@@ -1,0 +1,34 @@
+{
+  "name": "cutforge",
+  "description": "Open-source video creation and editing plugin: your photos, clips and voice notes become story-led films, brand films, explainers and ads. 13 skills, 4 reviewer agents, a tested Remotion engine. Runs on Claude Code, Codex, Cursor, Antigravity.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Indranil Banerjee",
+    "email": "neel@neelverse.com",
+    "url": "https://indranil.in"
+  },
+  "homepage": "https://indranil.in",
+  "repository": "https://github.com/indranilbanerjee/cutforge",
+  "license": "MIT",
+  "keywords": [
+    "video-editing",
+    "video-creation",
+    "storytelling",
+    "storyboard",
+    "remotion",
+    "voiceover",
+    "sound-design",
+    "brand-film",
+    "explainer-video",
+    "agent-skills"
+  ],
+  "category": "productivity",
+  "tags": [
+    "video",
+    "video-editing",
+    "storytelling",
+    "remotion",
+    "voiceover"
+  ],
+  "skills": "../../skills/"
+}

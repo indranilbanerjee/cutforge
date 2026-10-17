@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+.env
+*.log
+.mcp.json
+
+# claude plugin eval output
+evals/results/
+
+# render output if someone runs a demo inside the repo
+out/

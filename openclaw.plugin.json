@@ -1,0 +1,14 @@
+{
+  "id": "cutforge",
+  "name": "CutForge",
+  "description": "Open-source video creation and editing plugin: 13 skills and 4 reviewer agents that turn photos, clips and voice notes into finished, verified story-led video.",
+  "version": "1.0.0",
+  "skills": [
+    "./skills"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

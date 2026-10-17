@@ -1,0 +1,21 @@
+{
+  "title": "The Lamp",
+  "format": {"w": 1280, "h": 720, "fps": 25, "scale": 1.5},
+  "chapters": [
+    {"name": "intro", "fadeIn": 0.6, "shots": [
+      {"id": "1T", "fixed": 4.0, "layout": "title", "bg": "black", "text": "The Lamp", "sub": "a CutForge demo", "caps": false},
+      {"id": "1A", "vo": ["1A"], "pre": 0.8, "post": 1.2, "layout": "living", "media": ["media/demo_lamp.jpg"], "zoom": [1.03, 1.12], "xfade": 0.6},
+      {"id": "1B", "vo": ["1B"], "pre": 0.6, "post": 1.5, "layout": "living", "media": ["media/demo_sea.jpg"], "zoom": [1.1, 1.02], "drift": [0, 0, -30, 0], "date": "Spring 2024", "xfade": 0.8}
+    ]},
+    {"name": "example", "shots": [
+      {"id": "E1", "vo": ["E1a", "E1b"], "pre": 1.0, "gaps": 0.8, "post": 1.4},
+      {"id": "E2", "vo": ["E2"], "pre": 0.8, "post": 1.6}
+    ]},
+    {"name": "story", "fadeOut": 1.2, "shots": [
+      {"id": "2A", "vo": ["2A"], "pre": 0.8, "post": 1.4, "layout": "prints", "media": ["media/demo_hills.jpg", {"src": "media/demo_portrait.jpg", "portrait": true}, "media/demo_sea.jpg"], "stamp": {"text": "2024", "at": 2.6}},
+      {"id": "2B", "vo": ["2B"], "pre": 0.6, "post": 1.2, "layout": "triptych", "media": ["media/demo_clip_a.mp4", "media/demo_clip_b.mp4", "media/demo_clip_c.mp4"], "sound": true},
+      {"id": "2C", "vo": ["2C"], "pre": 1.0, "post": 2.2, "layout": "living", "media": ["media/demo_hills.jpg"], "zoom": [1.0, 1.08], "bw": true, "xfade": 1.0},
+      {"id": "3A", "vo": ["3A"], "pre": 2.6, "post": 3.4, "layout": "card", "text": ["Story first.", "Facts checked.", "Sound leads picture."], "lineAt": 0.4, "lineGap": 0.8, "capsMode": "paper"}
+    ]}
+  ]
+}

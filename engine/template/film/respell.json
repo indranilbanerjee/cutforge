@@ -1,0 +1,4 @@
+{
+  "_comment": "Engine-only spellings: captions keep the correct text, the TTS engine gets these. Test the hero's name in 3 spellings during the audition and keep the one the engine says right. Real cases: a word containing an invisible zero-width joiner was read with an extra syllable (gen_vo.py strips joiners for the engine by default), and a loanword was respelled the way people say it: 'ক্যাফে' -> 'কাফে'.",
+  "CutForge": "Cut Forge"
+}

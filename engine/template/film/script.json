@@ -1,0 +1,16 @@
+{
+  "title": "The Lamp (CutForge demo)",
+  "language": "en-IN",
+  "voice": {"provider": "placeholder", "voice": "", "note": "Pick the voice after an audition (tools/voice/audition.py). Providers: sarvam, sarvam_clone, elevenlabs, openai, placeholder."},
+  "lines": [
+    {"id": "1A", "text": "Every story starts with something small.", "dir": "slow, warm"},
+    {"id": "1B", "text": "Here, it is a lamp, and a sea nobody has seen yet.", "dir": "tender"},
+    {"id": "E1a", "text": "A hand-built shot anchors everything to the narration.", "dir": "plain"},
+    {"id": "E1b", "text": "Re-record this line, and the scene re-times itself.", "dir": "brisk"},
+    {"id": "E2", "text": "And the page turns.", "dir": "slow"},
+    {"id": "2A", "text": "Photos land like prints in an album.", "dir": "warm"},
+    {"id": "2B", "text": "Phone videos stand side by side. No black bars.", "dir": "brisk, comic"},
+    {"id": "2C", "text": "Then one picture, held long enough to feel it.", "dir": "slow, tender"},
+    {"id": "3A", "text": "That is the whole method.", "dir": "slow"}
+  ]
+}
