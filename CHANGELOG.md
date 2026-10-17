@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-10-17
+
+### Clean install on Hermes Agent
+
+**Fixed**
+
+- `engine/template/tools/voice/gen_vo.py` held two invisible joiner characters (U+200C, U+200D) in its source.
+  Hermes Agent's install-time security scanner reads invisible characters in a shipped file as hidden text and can
+  refuse the plugin. They are now written as escape codes; the behaviour is unchanged.
+
+**Added**
+
+- `tests/test_host_scanner_compat.py`: every shipped text file is checked against the install-scanner patterns the
+  rest of the suite already guards (destructive home-folder deletes, instructions to hide things from the user,
+  uploads to a URL, echo piped into an interpreter, invisible characters). 53 tests.
+
+---
+
 ## [1.0.0] - 2026-10-17
 
 ### The first public release: from raw footage to final cut

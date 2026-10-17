@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cutforge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Video creation and editing pipeline: 13 skills and 4 reviewer agents for story-led films, brand films, explainers and ads, built from real footage and verified before delivery.",
   "author": {
     "name": "Indranil Banerjee",

@@ -45,7 +45,7 @@ def pace(d):
 def respell(t):
     for a, b in RESPELL.items():
         if not a.startswith('_'): t = t.replace(a, b)
-    return t.replace('‌', '').replace('‍', '') if V.get('strip_joiners', True) else t
+    return t.replace('\u200c', '').replace('\u200d', '') if V.get('strip_joiners', True) else t
 
 
 def norm(t):

@@ -6,16 +6,16 @@ Say "make a film from our photos" and CutForge runs the job the way an editor wo
 
 Open-source video creation and editing plugin, **from raw footage to final cut**: **13 skills · 4 reviewer agents · a tested engine of 48 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers**. Built from a real 20-minute production and every mistake made in it. Installs on **Claude Code** (CLI + IDE), **Anthropic Cowork**, **OpenAI Codex**, **Cursor 2.5+**, **GitHub Copilot CLI**, **Google Antigravity 2.0**, **Hermes Agent**, **OpenClaw** and **Grok**, plus 35+ Agent Skills platforms. Created by [Indranil Banerjee](https://indranil.in) · [LinkedIn](https://www.linkedin.com/in/askneelnow/) · [X](https://x.com/askneelnow).
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/indranilbanerjee/cutforge?style=flat&logo=github&color=yellow)](https://github.com/indranilbanerjee/cutforge/stargazers)
-[![Tests](https://img.shields.io/badge/tests-51%2F51%20passing-brightgreen.svg)](tests/)
-[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v100)
+[![Tests](https://img.shields.io/badge/tests-53%2F53%20passing-brightgreen.svg)](tests/)
+[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v101)
 [![Engine](https://img.shields.io/badge/engine-Remotion%20%2B%20ffmpeg%20%2B%20Python-orange.svg)](#the-engine)
 
 [![Built by Indranil "Neel" Banerjee, Neelverse plugin suite. Sponsor this project](docs/assets/author-banner.svg)](https://github.com/sponsors/indranilbanerjee)
 
-> 🆕 **Just shipped: v1.0.0 (October 17, 2026). The first public release: 13 skills, 4 reviewer agents and an engine proven end to end on a real production.** [Current release](#current-release-v100) · [Changelog](CHANGELOG.md)
+> 🆕 **Just shipped: v1.0.1 (October 17, 2026). CutForge installs cleanly on Hermes Agent: one source line no longer looks like hidden text to its install-time scanner, and a guard keeps it that way. v1.0.0, the first public release, has 13 skills, 4 reviewer agents and an engine proven end to end on a real production.** [Current release](#current-release-v101) · [Changelog](CHANGELOG.md)
 
 ```bash
 # Install in Claude Code:
@@ -87,7 +87,7 @@ The amber steps are yours: the brief, the story, the look, the photo map, the bu
    /plugin install cutforge@neels-plugins
    ```
 
-   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v100).
+   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v101).
 2. **Prove the toolchain once.** Ask "start a CutForge demo project in D:/Films/demo", or run it yourself:
 
    ```bash
@@ -157,7 +157,7 @@ Four agents review work they did not build: `story-editor`, `film-qc-reviewer`, 
 
 CutForge was distilled from a 20-minute storybook film built end to end by Claude: seven look tests, two full cuts, 131 narration lines verified one by one, ten chapters rendered in resumable chunks and a 3.3 GB master delivered over a slow link. [`docs/lessons-learned.md`](docs/lessons-learned.md) records every mistake and the rule that now prevents it; [`docs/case-study.md`](docs/case-study.md) tells the production phase by phase, anonymised.
 
-## Supported surfaces (v1.0.0)
+## Supported surfaces (v1.0.1)
 
 | Platform | Install command | Manifest path | Status |
 |---|---|---|---|
@@ -195,11 +195,13 @@ CutForge was distilled from a 20-minute storybook film built end to end by Claud
 ```
 Projects keep their own copy of the engine, so an update never changes a film in progress. To bring a fix into a project, copy the changed tool from `engine/template/` into it.
 
-## Current Release (v1.0.0)
+## Current Release (v1.0.1)
+
+**v1.0.1:** an install fix for Hermes Agent. The voice tool held two invisible joiner characters in its source, which an install-time security scanner reads as hidden text; they are now written as escape codes, and a new guard checks every shipped file against the scanner's patterns.
 
 **v1.0.0:** the first public release. Thirteen skills and four reviewer agents covering the whole job from brief to delivery, and an engine proven end to end: a fresh demo project renders, mixes, assembles and verifies with no manual step, in landscape, vertical and square. Built in one pass with an independent review that found three blocking issues before release (a one-chapter re-mix that could desync later chapters, a blur-filled portrait layout, and identifying details in the case study), all fixed and covered by tests.
 
-Older releases will be listed in [CHANGELOG.md](CHANGELOG.md).
+Older releases are in [CHANGELOG.md](CHANGELOG.md).
 
 ## Documentation
 
