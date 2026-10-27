@@ -1,8 +1,17 @@
 // Shape Bengali text with HarfBuzz and export each glyph as an SVG path, positioned.
 // Lets us animate letters one by one without breaking conjuncts.
+// usage: node tools/text/shape.mjs <jobs.json> <out.json>     (tools/text/shapeall.sh runs it with the project's files)
 import fs from 'fs';
 import path from 'path';
-import * as hb from 'harfbuzzjs';
+
+const argv = process.argv.slice(2);
+if (argv.some((a) => a === '-h' || a === '--help')) {
+  console.log(fs.readFileSync(new URL(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).map((l) => l.replace(/^\/\/ ?/, '')).join('\n').trim());
+  process.exit(0);
+}
+if (argv.find((a) => a.startsWith('--'))) { console.error(`shape.mjs: unknown option ${argv.find((a) => a.startsWith('--'))}; run it with --help`); process.exit(2); }
+if (argv.length < 2) { console.error('usage: node tools/text/shape.mjs <jobs.json> <out.json>'); process.exit(2); }
+const hb = await import('harfbuzzjs');
 const FONTS = path.resolve("public/fonts");
 const jobs = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const out = {};

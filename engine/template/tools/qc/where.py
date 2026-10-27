@@ -1,5 +1,7 @@
 """Map a time in the film (from a client's note, e.g. "8:26 swap that face") to the shot, what is said, and what is shown.
 usage: python tools/qc/where.py 8:26 [12:03 ...]      (m:ss, h:mm:ss or seconds)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import FILM, load_json

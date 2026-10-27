@@ -11,6 +11,8 @@ usage: python tools/qc/storyboard.py [--chapters intro,e1] [--thumb 220] [--out 
 Publish the HTML as an artifact or send the file; it embeds its thumbnails (no external files), so keep it private: it
 shows the client's photos. The note column is saved in the viewer's browser; "Copy my notes" gives them a text block
 (shot id + time + note) to paste back to you. For a team review, ask for "row id: note" replies instead."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, json, html, base64, io, glob, subprocess
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import ROOT, FILM, OUT, PUBLIC, CFG, load_json

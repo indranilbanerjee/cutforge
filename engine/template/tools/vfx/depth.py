@@ -2,6 +2,8 @@
 Depth Anything V2 Small (Apache-2.0) for 2.5D parallax (tools/vfx/parallax.py).
 usage: python tools/vfx/depth.py photo.jpg [...] [--out public/media]   -> <out>/<stem>.jpg + <stem>_depth.png
 Depth parallax suits wide shots and landscapes. Keep faces still: small moves (2-4 %), never warp a face."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, numpy as np, cv2
 from PIL import Image, ImageOps
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

@@ -2,6 +2,8 @@
 
 Stdlib only. Used by setup_local.py and install_deps.py; nothing here installs or downloads anything.
 """
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import json, os, re, shutil, subprocess, sys
 
 NODE_MIN = 22            # Node 18 and 20 are end of life

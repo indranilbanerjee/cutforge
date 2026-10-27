@@ -6,6 +6,8 @@ The joiner never deletes anything: it truncates the output to the last verified 
 call that is cut off (time limits on remote shells) loses nothing. Checks every part's md5 before using it and the
 whole file's md5 at the end. Ask first what the far side already has: often a big file can be rebuilt there instead
 (tools/deliver/recover_chapters.py)."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, hashlib, time
 
 

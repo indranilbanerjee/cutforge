@@ -18,6 +18,8 @@ Checks (printed, and exit code 2 on errors so pipelines stop):
   WARN   a line id used twice, or a script line used nowhere
 usage: python film/timeline.py [--quiet]
 """
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'tools'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import json, os, sys
 
 R = os.path.dirname(os.path.abspath(__file__))

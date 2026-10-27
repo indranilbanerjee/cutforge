@@ -38,6 +38,7 @@ Everyone is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 ### Engine
 - Python 3.10+, no hard-coded paths (use `tools/paths.py` and `config.json`), `encoding='utf-8'` on every file read
   and write, `-nostdin` on every ffmpeg call, Windows-safe (no drive-letter colons in ffmpeg filter graphs).
+- Every engine tool starts with `import cli; cli.guard(__name__, __file__, __doc__)` right after its docstring (tools that use argparse are exempt), so `--help` prints usage and runs nothing; `tests/test_tool_help.py` discovers new tools and fails without it.
 - Never delete or overwrite a client's file. Paid calls go through `tools/spend.py` (`gate()` before, `log()` after).
 - Keys come from `tools/keys.py`; never print or log one.
 

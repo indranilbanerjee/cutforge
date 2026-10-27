@@ -12,6 +12,8 @@ usage: python tools/mix/film_mix.py            all chapters -> out/mix/<chapter>
                                                 (chapters whose start or length moved since their last mix are re-mixed too)
 Loudness: config mix.lufs (default -16 integrated, true peak -2 dBTP; small speakers/projectors). Online: -14. Broadcast: -23/-24.
 After mixing: python tools/qc/qc_audio.py   (abrupt drops, dead air, speech-over-bed ratio)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, importlib.util, numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

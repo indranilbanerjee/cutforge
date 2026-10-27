@@ -1,6 +1,8 @@
 """Resumable verified copy of big files onto a slow or remote drive: resumes each file from a 16 MiB boundary,
 md5-checks source vs copy, marks finished files with <name>.copied next to the SOURCE. Never deletes.
 usage: python tools/deliver/rcopy.py <src_dir> <dst_dir> <budget_seconds> file [file ...]"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, time, hashlib
 if len(sys.argv) < 5: sys.exit(__doc__)
 src_dir, dst_dir, budget = sys.argv[1], sys.argv[2], float(sys.argv[3]); names = sys.argv[4:]

@@ -14,6 +14,8 @@ Free-tempo music (an alap, rubato piano, a drone) has no grid: use the onsets on
 Method: spectral-flux onset envelope -> tempo by autocorrelation with a prior near 100 BPM -> beats by dynamic
 programming (Ellis 2007) -> downbeat phase = the beat position with the strongest low-frequency onsets.
 Needs only numpy and ffmpeg."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, subprocess, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT

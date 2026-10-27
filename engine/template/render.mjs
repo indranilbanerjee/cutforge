@@ -5,13 +5,22 @@
 //   chunks: out_000.mp4, out_001.mp4 ... of chunkFrames each (default 750); chunks already on disk are skipped,
 //           so an interrupted render resumes where it stopped.
 // Scale: 4th arg, else $SCALE, else timeline format.scale (design 1280x720 x 1.5 = 1920x1080 master).
-import {bundle} from '@remotion/bundler';
-import {renderMedia, selectComposition, renderStill} from '@remotion/renderer';
 import path from 'path';
 import fs from 'fs';
 
+const argv = process.argv.slice(2);
+// -h/--help and unknown options are handled before Remotion is loaded, so they work in a project with no node_modules yet and run nothing.
+if (argv.some((a) => a === '-h' || a === '--help')) {
+  console.log(fs.readFileSync(new URL(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).map((l) => l.replace(/^\/\/ ?/, '')).join('\n').trim());
+  process.exit(0);
+}
+const unknown = argv.find((a) => a.startsWith('--'));
+if (unknown) { console.error(`render.mjs: unknown option ${unknown}; run it with --help`); process.exit(2); }
+
 const [,, id, out, mode = 'video', frameArg, scaleArg] = process.argv;
-if (!id || !out) { console.error('usage: node render.mjs <chapter> <out> [video|still|chunks] [frames] [scale]'); process.exit(1); }
+if (!id || !out) { console.error('usage: node render.mjs <chapter> <out> [video|still|chunks] [frames] [scale]'); process.exit(2); }
+const {bundle} = await import('@remotion/bundler');
+const {renderMedia, selectComposition, renderStill} = await import('@remotion/renderer');
 // PowerShell 5.1 and Notepad write JSON with a byte-order mark, which JSON.parse rejects: strip it.
 const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, ''));
 const cfg = fs.existsSync('config.json') ? readJson('config.json') : {};

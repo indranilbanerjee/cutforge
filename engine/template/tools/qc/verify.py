@@ -3,6 +3,8 @@ final film's duration matches the timeline and the mix.
 usage: python tools/qc/verify.py                 chapters in out/ch/*_f.mp4
        python tools/qc/verify.py --final FILE    the assembled film (adds duration, audio and a full decode check)
        python tools/qc/verify.py --decode        also full-decode every chapter (slow, thorough)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, subprocess
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, FILM, load_json

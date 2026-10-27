@@ -1,5 +1,7 @@
 """Manual kerning for shaped titles: tools/text/kern.json = {"<id>": {"<glyph index>": <font units shift>}}.
 A shift moves that glyph and every glyph after it. Use when a display font sets two letters too far apart."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import json, os
 R = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
 p = os.path.join(R, 'src', 'glyphs.json')

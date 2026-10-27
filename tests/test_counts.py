@@ -17,7 +17,7 @@ class TestCounts(unittest.TestCase):
                      "tools": len(engine_tools())}
 
     def test_truth_is_what_we_think(self):
-        self.assertEqual(self.truth, {"skills": 13, "reviewer agents": 4, "tools": 52})
+        self.assertEqual(self.truth, {"skills": 13, "reviewer agents": 4, "tools": 53})
 
     def test_every_stated_count(self):
         for rel in STATED_IN:

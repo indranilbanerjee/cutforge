@@ -4,6 +4,8 @@
 - renders the synthesised sound set (sound/synth) and builds the timeline
 usage: python tools/setup_local.py
 Exit status: 0 everything required is present, 1 something is missing or too old."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, shutil, subprocess, importlib.util
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from paths import ROOT, CFG

@@ -7,6 +7,8 @@
   RUNTIME     total more than 5 % away from config target_minutes
 Dates come from out/archive/inventory.csv (tools/archive/inventory.py) matched by file name.
 usage: python tools/qc/qc_story.py"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, json, re, collections
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import ROOT, OUT, FILM, CFG, load_json

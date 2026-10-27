@@ -15,6 +15,8 @@ usage:
   python tools/vfx/ai_gen.py video  <model path> out.mp4 "motion prompt" --image plate.png [--param duration=5]
   <model path> is the host's model route (<vendor>/<model>/<endpoint>): take it from the host's model page, with its parameters
   and price, because both change. Key: WAVESPEED_API_KEY (or WAVE_SPEED_API_KEY)."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__, extra=cli.SPEND_FLAGS)
 import os, sys, json, time, base64, urllib.request, urllib.error
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, CFG

@@ -7,6 +7,8 @@ usage: python tools/archive/inventory.py <folder> [<folder> ...] [--out out/arch
 Dates, best source first: EXIF DateTimeOriginal (photos) > container creation_time (videos) > a date in the file
 name (20230403_123019, IMG-20250304-WA0009, IMG20201115204842, Screenshot_2024...) > file modified time (marked).
 Re-running only reads files that changed. Read-only: never writes into the scanned folders."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, re, csv, json, hashlib, subprocess, datetime, concurrent.futures as cf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, CFG

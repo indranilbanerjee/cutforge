@@ -5,6 +5,8 @@ usage: python tools/grade/grade.py in.mp4 out.mp4 [preset]
 presets: warm (storybook, family), pop (brighter, kids/brand), neutral (corporate/explainer, minimal look),
          bw (silver black and white), doc (cool documentary). Lifted blacks protect small projectors and phones.
 ffmpeg runs inside out/look so the LUT path has no drive letter (ffmpeg's filter parser breaks on 'D:' on Windows)."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import sys, os, subprocess, numpy as np, cv2
 
 P = {

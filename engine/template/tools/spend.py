@@ -14,6 +14,8 @@ A file in the project cannot stand in for the client's go: GO_AHEAD.txt is no lo
 usage in code:  from spend import plan, log_plan, parse_flags, plan_or_exit
 usage on CLI :  python tools/spend.py            (prints the totals and the caps)
 Exit status of the paid tools: 4 = a quote, a requote or a go is needed (nothing was spent)."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

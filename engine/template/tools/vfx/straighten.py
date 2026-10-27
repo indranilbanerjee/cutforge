@@ -3,6 +3,8 @@ letters): four-point perspective correction to a flat, upright rectangle.
 usage: python tools/vfx/straighten.py photo.jpg out.jpg                      auto: finds the biggest 4-sided outline
        python tools/vfx/straighten.py photo.jpg out.jpg x1,y1 x2,y2 x3,y3 x4,y4   manual corners (any order)
 Check the result by eye; with glare or busy frames, give the corners manually."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import sys, numpy as np, cv2
 from PIL import Image, ImageOps
 

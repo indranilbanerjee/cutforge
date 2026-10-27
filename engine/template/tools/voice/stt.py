@@ -2,6 +2,8 @@
 providers: sarvam (Indian languages) and openai. Paid calls. The model is the registry's choice for latest-stt-<provider>
 (tools/resolve_model.py) unless the caller names one, so a vendor's retirement of a model arrives with a registry sync.
 usage: python tools/voice/stt.py file.wav [lang]"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, uuid, urllib.request, urllib.error
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from keys import key

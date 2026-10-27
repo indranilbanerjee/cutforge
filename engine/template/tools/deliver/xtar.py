@@ -2,6 +2,8 @@
 (some remote mounts): writes by truncate+write, skips members already present with the same md5, resumable
 under a time budget. Never deletes anything.
 usage: python tools/deliver/xtar.py <dest> <budget_seconds> <archive.tar | part.000 part.001 ...>"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import tarfile, os, sys, time, hashlib, io
 
 

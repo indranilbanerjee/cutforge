@@ -3,6 +3,8 @@ with file name and capture time; videos show their middle frame with a play mark
 usage: python tools/archive/contact_sheet.py [--by month|day] [--from 2023-01] [--to 2023-12] [--kind photo|video]
        python tools/archive/contact_sheet.py --list files.txt --name picks
 writes out/archive/sheets/<group>.jpg (48 thumbnails per sheet)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, subprocess, io
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

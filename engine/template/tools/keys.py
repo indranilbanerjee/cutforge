@@ -1,6 +1,8 @@
 """API keys: environment variable first, then the key file named in config.json (api_keys_file).
 The file holds one NAME=value (or NAME: value) per line. Keys are returned, never printed or logged.
 usage: from keys import key; key('SARVAM_API_KEY')      check: python tools/keys.py NAME [NAME...]"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from paths import CFG

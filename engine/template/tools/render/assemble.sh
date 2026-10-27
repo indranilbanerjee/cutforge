@@ -1,6 +1,10 @@
 #!/bin/bash
 # Join the graded chapters (in timeline order) with the master mix into ONE film, plus a light 540p preview.
 # usage: VER=v2 bash tools/render/assemble.sh      (default v1; a new VER per cut, so nothing delivered is overwritten)
+case "$1" in
+  -h|--help) awk 'NR>1 && /^#/ {sub(/^# ?/, ""); print; next} NR>1 {exit}' "$0"; exit 0;;
+  -*) echo "$(basename "$0"): unknown option $1; run it with --help" >&2; exit 2;;
+esac
 set -e
 cd "$(dirname "$0")/../.." || exit 1
 PY=${PY:-$(python3 -c "import sys" >/dev/null 2>&1 && echo python3 || echo python)}

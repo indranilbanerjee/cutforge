@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "cutforge",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Video creation and editing pipeline: 13 skills and 4 reviewer agents for story-led films, brand films, explainers and ads, built from real footage and verified before delivery.",
   "author": {
     "name": "Indranil Banerjee",
@@ -23,7 +23,7 @@
       "interface": {
         "displayName": "CutForge",
         "shortDescription": "Open-source video creation and editing plugin: your photos, clips and voice notes become story-led films, brand films, explainers and ads. 13 skills, 4 reviewer agents, a tested Remotion engine. Runs on Claude Code, Codex, Cursor, Antigravity.",
-        "longDescription": "From raw footage to final cut. 13 skills + 4 reviewer agents + a tested engine (Remotion, ffmpeg and Python: 52 tools). CutForge runs the whole job: the brief, archive research (real capture dates, face clusters the client names, semantic search, the real sound inside phone clips), story design with arcs and a beat map, a look test and a data-driven storyboard, narration in any voice (cloned only with the owner's consent) verified line by line by speech-to-text, music-first sound design with a cue sheet that follows the timeline, AI art only where no camera was (never on real faces), chunked resumable renders where a fix re-renders one chapter, nine QC layers, delivery encodes, verified transfers and revision rounds. Family and milestone films, tributes, weddings, brand films, explainers, ads, and pharma and BFSI videos with India-first compliance. Portable across Claude Code, Codex, Cursor and Antigravity via the Agent Skills open standard.",
+        "longDescription": "From raw footage to final cut. 13 skills + 4 reviewer agents + a tested engine (Remotion, ffmpeg and Python: 53 tools). CutForge runs the whole job: the brief, archive research (real capture dates, face clusters the client names, semantic search, the real sound inside phone clips), story design with arcs and a beat map, a look test and a data-driven storyboard, narration in any voice (cloned only with the owner's consent) verified line by line by speech-to-text, music-first sound design with a cue sheet that follows the timeline, AI art only where no camera was (never on real faces), chunked resumable renders where a fix re-renders one chapter, nine QC layers, delivery encodes, verified transfers and revision rounds. Family and milestone films, tributes, weddings, brand films, explainers, ads, and pharma and BFSI videos with India-first compliance. Portable across Claude Code, Codex, Cursor and Antigravity via the Agent Skills open standard.",
         "developerName": "Indranil Banerjee",
         "category": "Productivity",
         "capabilities": [

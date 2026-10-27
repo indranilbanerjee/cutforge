@@ -11,6 +11,8 @@ presets
 options: --lufs N --tp N override loudness (two-pass loudnorm + limiter). Files over 4 GB get a FAT32 warning automatically.
 AAC can add up to ~0.5 dB of true-peak overs at low bitrates: for strict broadcast specs measure the delivered file
 (ffmpeg -i out.mp4 -af ebur128=peak=true -f null -) and re-encode with a lower --tp if needed."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, subprocess
 
 PRESETS = {

@@ -1,5 +1,7 @@
 """Procedural demo media so the template renders before any real material exists (no stock, no people, no licences).
 usage: python tools/demo_assets.py      -> public/media/demo_*.jpg / demo_clip_*.mp4 (with a little sound each)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, subprocess, numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

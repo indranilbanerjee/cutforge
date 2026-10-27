@@ -9,6 +9,8 @@ writes out/archive/clip_index.npz and out/archive/search/<query>.jpg (+ .csv wit
 Needs the archive-search group: python tools/install_deps.py --groups archive-search  (prints the pinned command; CPU is fine;
 ~10 min per 1,000 photos on 2 cores to index).
 Model: ViT-B-32 laion2b_s34b_b79k (OpenCLIP, MIT code; weights downloaded from Hugging Face on first use)."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, io, re, subprocess, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT

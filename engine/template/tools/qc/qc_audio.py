@@ -5,6 +5,8 @@ Finds what viewers call "abrupt":
   CUT TAIL  a drop within 0.4 s after a shot cut (a sound chopped by the edit)
 Also prints integrated loudness and true peak (ffmpeg ebur128) against the target in config mix.lufs (flag: > 1 LU off).
 usage: python tools/qc/qc_audio.py [out/film_mix.wav] [--quiet]     exit code 1 when anything is flagged"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, subprocess, re, numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, FILM, CFG, load_json

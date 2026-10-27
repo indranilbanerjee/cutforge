@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1] - 2026-10-27
+
+### `--help` prints usage and runs nothing, and an unknown option exits 2
+
+Found by an audit of 1.1.0 (2026-10-27): `python tools/voice/gen_vo.py --help` ran the tool. A survey of every engine tool with the network off found that `--help` also wrote sound files (`synth.py`), generated the demo media (`demo_assets.py`), re-mixed the film (`film_mix.py`), began downloading model weights (`vfx/cutout.py`), and 12 more crashed with a traceback by treating `--help` as a path; only 13 of the 46 Python tools exited 0 with any output. With a paid provider the quote gate still stopped `gen_vo.py`, but a help request should never start work.
+
+**Fixed**
+
+- A new `tools/cli.py` gives every engine tool one guard, `import cli; cli.guard(__name__, __file__, __doc__)`, placed right after its docstring and before anything else runs. `-h` or `--help` prints the docstring and exits 0, having written, fetched and called nothing. An option starting with `--` that the tool's own source and docstring do not mention exits 2 with a one-line message. The four paid tools (`gen_vo.py`, `audition.py`, `import_vo.py --verify`, `ai_gen.py`) also let `--go` and `--quoted-providers` through. The three argparse tools (`install_deps.py`, `price_book.py`, `resolve_model.py`) already behaved this way and do not need it.
+- The shell tools (`assemble.sh`, `pipeline.sh`, `shapeall.sh`) print their header usage on `-h`/`--help` and exit 2 on an unknown option; `render.mjs` and `tools/text/shape.mjs` do the same before Remotion or HarfBuzz is loaded, so they answer in a project that has no `node_modules` yet, and `render.mjs` called with no arguments exits 2 instead of 1.
+- `new_project.py` exits 2 (a bad argument) when the target is inside the plugin folder or is not empty, with the message on stderr; it exited 1 through `sys.exit(message)`.
+
+**Added**
+
+- `tests/test_tool_help.py` (10): every Python tool is discovered and must carry the guard (or use argparse); `--help` and `-h` on all of them exit 0 with usage and leave the project's files untouched, run with the network off (socket calls raise) and stdin closed; an unknown option exits 2 for all of them; the shell and Node tools and `new_project.py` behave the same; the four paid tools accept the two quote flags; and a planted tool without the guard shows the 1.1.0 behaviour (it runs on `--help`). Run against the 1.1.0 tree, 9 of the 10 fail.
+
 ## [1.1.0] - 2026-10-27
 
 ### Paid calls are quoted first, the speech models come from the registry, and the setup checks what it needs

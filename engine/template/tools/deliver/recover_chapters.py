@@ -6,6 +6,8 @@ on the machine that HAS the chapters:   python tools/deliver/recover_chapters.py
 on the machine that has only the master: python tools/deliver/recover_chapters.py cut <master.mp4> chapters_ref.json [--out out/ch]
 Checks: frame count per chapter and an md5 of every DECODED frame (packet bytes can differ by in-band headers at
 keyframes; pictures must not). A chapter that fails is reported; transfer only that one."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, subprocess, hashlib
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, FILM, load_json

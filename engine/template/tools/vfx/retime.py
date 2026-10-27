@@ -2,6 +2,8 @@
 and conform frame rate and size to the film. Dreamier than speeding up a still.
 usage: python tools/vfx/retime.py in.mp4 out.mp4 --factor 2.0 [--fps 25] [--size 1920x1080]
 Interpolation can smear fast motion or thin details: look at the result frame by frame before using it."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import sys, subprocess
 
 a = sys.argv[1:]

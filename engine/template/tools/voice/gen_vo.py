@@ -15,6 +15,8 @@ Rules this enforces (from real productions):
   - paid providers pass the quote gate first: a run WITHOUT --go prints the quote (from tools/price_book.py) and exits 4,
     spending nothing; after the client's typed go, run the same command with --go --quoted-providers <the quoted providers>
     (tools/spend.py explains the flow; the cap is config.budget_inr)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__, extra=cli.SPEND_FLAGS)
 import os, sys, json, re, time, shutil, concurrent.futures as cf
 import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

@@ -1,5 +1,7 @@
 """Mixing engine: decode any file with ffmpeg, place it on named buses with fades/gain/pan/effects,
 automate and duck buses, render with loudness normalisation. 48 kHz stereo float32 throughout."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, subprocess, numpy as np, soundfile as sf
 from pedalboard import (Pedalboard, Reverb, HighpassFilter, LowpassFilter, PitchShift, Compressor, Gain, LowShelfFilter,
                         HighShelfFilter, PeakFilter, Limiter)

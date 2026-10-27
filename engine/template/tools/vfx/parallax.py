@@ -14,6 +14,8 @@ plates.json: a list of shot specs:
   "ease": "inout"}
 Rules: gentle (dolly <= 0.08, zoom <= 10 % over 5 s); avoid strong parallax on faces (they smear at depth edges).
 """
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import sys, os, json, math, subprocess, numpy as np, cv2
 R = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(R, '..'))

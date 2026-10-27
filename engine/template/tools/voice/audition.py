@@ -6,6 +6,8 @@ audition.json: {"lines": ["1A", "3B", ...] or [{"id": "x", "text": "..."}],
                 "name_tests": ["<the hero's name in 3 spellings>"]}
 writes out/audition/<candidate>/<line>.wav and out/audition/index.html. Paid providers pass the quote gate: without --go it
 prints the quote and exits 4; after the client's go, add --go --quoted-providers <the quoted providers>."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__, extra=cli.SPEND_FLAGS)
 import os, sys, json, html
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

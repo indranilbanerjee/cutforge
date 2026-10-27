@@ -8,6 +8,8 @@ With several takes for one id, the file listed last (or sorted last in a folder)
 --verify transcribes each take back and fuzzy-matches it to the script like generated lines (paid STT: the quote gate; without
 --go it prints the quote and exits 4, then add --go --quoted-providers <the quoted provider> after the client's go).
 Then: python film/timeline.py"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__, extra=cli.SPEND_FLAGS)
 import os, sys, re, subprocess, numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

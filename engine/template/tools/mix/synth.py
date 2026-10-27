@@ -9,6 +9,8 @@ licensed library) beat synthesis for anything physical (doors, vehicles, crowds,
   room(dur, db)             quiet pink room tone (keeps a projector speaker from sounding 'dead')
   pen(dur)                  dip-pen scratch on paper
 usage: python tools/mix/synth.py   -> renders the default set into sound/synth/*.wav"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt
 

@@ -2,6 +2,8 @@
 the exact seconds to use and see where the real sound (laughs, a conch, drums, speech) is.
 usage: python tools/archive/clip_strips.py [--from 2023-01] [--to 2023-12] [--min 2] [--files a.mp4 b.mp4]
 writes out/archive/strips/<name>.jpg and out/archive/clips.csv (duration, mean and peak loudness, loud moments)"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, subprocess, io, numpy as np
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

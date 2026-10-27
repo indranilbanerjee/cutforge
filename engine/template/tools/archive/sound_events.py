@@ -3,6 +3,8 @@ loud transients (drums, claps, firecrackers), and lively voiced stretches (laugh
 library effect because they are the sound of that day.
 usage: python tools/archive/sound_events.py [--from 2023-01] [--to 2026-12] [--files a.mp4 ...]
 writes out/archive/sound_events.csv: file, time, kind, length, level. Listen before using; label in sources.md."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, subprocess, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT

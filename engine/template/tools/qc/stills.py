@@ -5,6 +5,8 @@ vertical frames get the platform-safe zone x 10-90 %, y 15-65 % instead;
 phones put UI over the bottom of vertical video).
 usage: python tools/qc/stills.py <chapter> [--shots 2A,2B] [--safe 0.86] [--scale 0.5] [--fresh]  (--fresh re-renders cached frames)
 writes out/qc/<chapter>_<frame>.jpg and out/qc/<chapter>_sheet<k>.jpg"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, subprocess
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

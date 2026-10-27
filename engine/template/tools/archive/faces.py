@@ -10,6 +10,8 @@ step 3  python tools/archive/faces.py apply
         writes film/people_in_media.json {media path: [names]} for screen-time counts (tools/qc/qc_story.py)
         and crops each labelled person's best face to public/faces/<name>_<n>.jpg for people pages
 Thresholds: SFace cosine >= 0.363 is OpenCV's 'same person' bar; clustering uses 0.42 to stay conservative."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, json, subprocess, io, numpy as np, cv2
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, FILM, PUBLIC, load_json, save_json

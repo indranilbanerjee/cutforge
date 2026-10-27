@@ -9,6 +9,8 @@ config.json keys (all optional):
   budget_inr       spend cap for paid APIs (tools refuse to run past it)
   browser_executable, gl, concurrency   renderer settings (see render.mjs)
 """
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, json, sys
 
 TOOLS = os.path.dirname(os.path.abspath(__file__))

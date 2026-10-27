@@ -25,10 +25,12 @@ def inside(child, parent):
 
 
 if inside(T, PLUGIN):
-    sys.exit(f'{T} is inside the CutForge plugin folder ({PLUGIN}): copying the template into itself would never end. '
-             'Pick a folder outside the plugin, for example next to your footage.')
+    print(f'{T} is inside the CutForge plugin folder ({PLUGIN}): copying the template into itself would never end. '
+          'Pick a folder outside the plugin, for example next to your footage.', file=sys.stderr)
+    sys.exit(2)
 if os.path.exists(T) and os.listdir(T):
-    sys.exit(f'{T} exists and is not empty: pick a new folder (CutForge never overwrites).')
+    print(f'{T} exists and is not empty: pick a new folder (CutForge never overwrites).', file=sys.stderr)
+    sys.exit(2)
 shutil.copytree(os.path.join(HERE, 'template'), T, dirs_exist_ok=True,
                 ignore=shutil.ignore_patterns('node_modules', '__pycache__', 'out', '*.pyc'))
 # A Windows clone with core.autocrlf=true writes the .sh files with CRLF line ends, which bash rejects ("syntax error near

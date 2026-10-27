@@ -15,6 +15,8 @@ providers
 Keys (env or key file): SARVAM_API_KEY (alias SHARVAM_API_KEY), ELEVENLABS_API_KEY, OPENAI_API_KEY.
 APIs change: if a provider errors, read its current docs before changing anything else (field names drift).
 Every call here is a paid call except placeholder: the caller must pass the quote gate (tools/spend.py plan())."""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, base64, uuid, urllib.request, urllib.error, io
 import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

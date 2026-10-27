@@ -3,6 +3,8 @@
 A near-empty stretch of months often marks something the family went through: ask, never assume, and never
 narrate a reason the client has not given.
 usage: python tools/archive/stats.py [out/archive/inventory.csv]"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, csv, collections
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT

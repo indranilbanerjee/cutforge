@@ -4,6 +4,8 @@
   depth  Depth Anything V2 SMALL, Apache-2.0         (depth.py). Base/Large/Giant are CC-BY-NC: never for client work.
 rembg downloads its own u2net weights on first use (Apache-2.0); never use bria-rmbg without a commercial licence.
 usage: python tools/fetch_models.py [yunet sface depth]"""
+import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, hashlib, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from paths import ROOT
