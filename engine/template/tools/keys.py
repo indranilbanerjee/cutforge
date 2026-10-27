@@ -3,9 +3,17 @@ The file holds one NAME=value (or NAME: value) per line. Keys are returned, neve
 usage: from keys import key; key('SARVAM_API_KEY')      check: python tools/keys.py NAME [NAME...]"""
 import os as _os, sys as _sys; _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 import cli; cli.guard(__name__, __file__, __doc__)
-import os, re, sys
+import os, re, sys, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from paths import CFG
+
+
+def keyed_request(url, headers, data=None):
+    """A urllib Request that sends `headers` (the key among them) to `url` and to no other host. urllib copies a request's ordinary
+    headers to whatever host a 30x answer names; add_unredirected_header keeps them on this first request only."""
+    req = urllib.request.Request(url, data=data)
+    for name, value in headers.items(): req.add_unredirected_header(name, value)
+    return req
 
 
 def key(name, *aliases):

@@ -6,16 +6,16 @@ Say "make a film from our photos" and CutForge runs the job the way an editor wo
 
 Open-source video creation and editing plugin, **from raw footage to final cut**: **13 skills · 4 reviewer agents · a tested engine of 53 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers**. Built from a real 20-minute production and every mistake made in it. Installs on **Claude Code** (CLI + IDE), **Anthropic Cowork**, **OpenAI Codex**, **Cursor 2.5+**, **GitHub Copilot CLI**, **Google Antigravity 2.0**, **Hermes Agent**, **OpenClaw** and **Grok**, plus 35+ Agent Skills platforms. Created by [Indranil Banerjee](https://indranil.in) · [LinkedIn](https://www.linkedin.com/in/askneelnow/) · [X](https://x.com/askneelnow).
 
-[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.2-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/indranilbanerjee/cutforge?style=flat&logo=github&color=yellow)](https://github.com/indranilbanerjee/cutforge/stargazers)
-[![Tests](https://img.shields.io/badge/tests-171%2F171%20passing-brightgreen.svg)](tests/)
-[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v111)
+[![Tests](https://img.shields.io/badge/tests-187%2F187%20passing-brightgreen.svg)](tests/)
+[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v112)
 [![Engine](https://img.shields.io/badge/engine-Remotion%20%2B%20ffmpeg%20%2B%20Python-orange.svg)](#the-engine)
 
 [![Built by Indranil "Neel" Banerjee, Neelverse plugin suite. Sponsor this project](docs/assets/author-banner.svg)](https://github.com/sponsors/indranilbanerjee)
 
-> 🆕 **Just shipped: v1.1.1 (October 27, 2026). `--help` prints usage and runs nothing, and an unknown option exits 2.** In 1.1.0 `gen_vo.py --help` ran the tool; now every engine tool answers `--help` before it does any work. [Changelog](CHANGELOG.md)
+> 🆕 **Just shipped: v1.1.2 (October 28, 2026). The model registry names a Veo replacement for each service, not one id that only one service serves.** The shut-down Veo preview has a different replacement on the Gemini API than on Vertex AI, and a retired-model message now names both with their service. A key sent to WaveSpeed, Sarvam, ElevenLabs or OpenAI no longer follows a redirect to another host. [Changelog](CHANGELOG.md)
 
 ```bash
 # Install in Claude Code:
@@ -99,7 +99,7 @@ The amber steps are yours: the brief, the story, the look, the photo map, the bu
    /plugin install cutforge@neels-plugins
    ```
 
-   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v111).
+   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v112).
 2. **Prove the toolchain once.** Ask "start a CutForge demo project in D:/Films/demo", or run it yourself:
 
    ```bash
@@ -169,7 +169,7 @@ Four agents review work they did not build: `story-editor`, `film-qc-reviewer`, 
 
 CutForge was distilled from a 20-minute storybook film built end to end by Claude: seven look tests, two full cuts, 131 narration lines verified one by one, ten chapters rendered in resumable chunks and a 3.3 GB master delivered over a slow link. [`docs/lessons-learned.md`](docs/lessons-learned.md) records every mistake and the rule that now prevents it; [`docs/case-study.md`](docs/case-study.md) tells the production phase by phase, anonymised.
 
-## Supported surfaces (v1.1.1)
+## Supported surfaces (v1.1.2)
 
 | Platform | Install command | Manifest path | Status |
 |---|---|---|---|
@@ -207,13 +207,13 @@ CutForge was distilled from a 20-minute storybook film built end to end by Claud
 ```
 Projects keep their own copy of the engine, so an update never changes a film in progress. To bring a fix into a project, copy the changed tool from `engine/template/` into it.
 
-## Current Release (v1.1.1)
+## Current Release (v1.1.2)
+
+**v1.1.2:** The model registry names a Veo replacement for each service, not one id that only one service serves. The mirrored registry's entry for the shut-down Veo preview named the Vertex AI replacement for everyone, so a Gemini API key holder was told to use a model their service does not list. The registry is mirrored from Digital Marketing Pro 3.40.0 with a replacement per service, and `resolve_model.py` prints each with its service. `SECURITY.md` names the supported minor (it said 1.0.x), a test rejects a skill, command or agent name that carries a hidden or direction-changing character, and the internal-reference scan catches a working role named after up to two words. The paid tools (image and video generation, speech to text, text to speech) send their keys so that a redirect cannot carry one to another host. [Changelog](CHANGELOG.md)
 
 **v1.1.1:** `--help` prints usage and runs nothing, and an unknown option exits 2. A survey of the engine with the network off found that `--help` wrote sound files, generated demo media, re-mixed the film and began a model download in some tools, and crashed in a dozen more. Every Python tool now starts with one guard (`tools/cli.py`); the shell and Node tools answer before Remotion is loaded; `new_project.py` exits 2 for a bad target. A new test runs every tool's `--help` offline and checks nothing was written.
 
 **v1.1.0:** paid calls are quoted first, the speech models come from the registry, and setup checks what it needs. A paid tool (`gen_vo.py`, `audition.py`, `import_vo.py --verify`, `ai_gen.py`) run without `--go` prints a quote and exits 4; the price comes from `tools/price_book.py`, recorded from the provider's page and expiring after a week, and a run with `--go` must name the quoted providers. `GO_AHEAD.txt`, which an agent can create, is no longer read. Narration and transcription take their model from the registry: Sarvam's transcription default was one the vendor's reference no longer lists, and OpenAI is shutting down every speech model on 2027-01-06 with a replacement that runs only on a Realtime API this tool does not call, so the `openai` voice now refuses unless you name a model. Setup requires Node 22, checks ffmpeg and the Remotion pin, and `install_deps.py` prints pinned pip commands. Windows clones no longer hand a project shell scripts with CRLF line ends, and files saved with a byte-order mark load. The four agent descriptions are one sentence each (always-on cost from about 2,212 tokens to about 825).
-
-**v1.0.1:** an install fix for Hermes Agent. The voice tool held two invisible joiner characters in its source, which an install-time security scanner reads as hidden text; they are now written as escape codes, and a new guard checks every shipped file against the scanner's patterns.
 
 Older releases are in [CHANGELOG.md](CHANGELOG.md).
 

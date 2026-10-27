@@ -20,7 +20,7 @@ import cli; cli.guard(__name__, __file__, __doc__, extra=cli.SPEND_FLAGS)
 import os, sys, json, time, base64, urllib.request, urllib.error
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, CFG
-from keys import key
+from keys import key, keyed_request
 import spend
 
 API = 'https://api.wavespeed.ai/api/v3/'
@@ -49,13 +49,13 @@ def has_face(p):
 def run(model, body, out, the_plan, note=''):
     hdr = {'Authorization': 'Bearer ' + key('WAVESPEED_API_KEY', 'WAVE_SPEED_API_KEY'), 'Content-Type': 'application/json'}
     try:
-        r = json.load(urllib.request.urlopen(urllib.request.Request(API + model, data=json.dumps(body).encode(), headers=hdr), timeout=180))
+        r = json.load(urllib.request.urlopen(keyed_request(API + model, hdr, json.dumps(body).encode()), timeout=180))
     except urllib.error.HTTPError as e:
         raise RuntimeError(f'HTTP {e.code}: {e.read()[:300]!r}') from None
     pid = r['data']['id']
     for _ in range(360):
         time.sleep(5)
-        q = json.load(urllib.request.urlopen(urllib.request.Request(f'{API}predictions/{pid}/result', headers=hdr), timeout=60))['data']
+        q = json.load(urllib.request.urlopen(keyed_request(f'{API}predictions/{pid}/result', hdr), timeout=60))['data']
         if q['status'] == 'completed':
             urllib.request.urlretrieve(q['outputs'][0], out)
             spend.log_plan('ai_gen', the_plan, note or os.path.basename(out))

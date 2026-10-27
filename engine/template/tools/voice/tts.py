@@ -20,14 +20,14 @@ import cli; cli.guard(__name__, __file__, __doc__)
 import os, sys, json, base64, uuid, urllib.request, urllib.error, io
 import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-from keys import key
+from keys import key, keyed_request
 from resolve_model import model_for
 
 SR = 48000
 
 
 def _post(url, body, headers, timeout=180):
-    req = urllib.request.Request(url, data=body, headers=headers)
+    req = keyed_request(url, headers, body)
     try:
         return urllib.request.urlopen(req, timeout=timeout).read()
     except urllib.error.HTTPError as e:

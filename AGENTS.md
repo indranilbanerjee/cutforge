@@ -10,7 +10,7 @@ photos, clips, voice notes, documents and brand assets into a finished, verified
 films, tributes, weddings, brand films, explainers, ads, and pharma or BFSI videos with India-first compliance.
 **13 skills · 4 reviewer agents · a tested engine of 53 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers.**
 
-**Supported surfaces (v1.1.1):** Claude Code (CLI + IDE extensions), Anthropic Cowork, OpenAI Codex (CLI + IDE + App),
+**Supported surfaces (v1.1.2):** Claude Code (CLI + IDE extensions), Anthropic Cowork, OpenAI Codex (CLI + IDE + App),
 Cursor 2.5+, GitHub Copilot CLI, Google Antigravity 2.0 (CLI + IDE), Hermes Agent, OpenClaw, Grok (xAI Build CLI, native
 `.grok-plugin/` pair).
 

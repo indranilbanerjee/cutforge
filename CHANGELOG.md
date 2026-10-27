@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.2] - 2026-10-28
+
+### The registry names a Veo replacement for each service, and no key follows a redirect to another host
+
+Found while the model registry was audited against the Gemini API's deprecations record. The mirrored registry's entry for the shut-down `veo-3.1-generate-preview` named one `replacement_id`, `veo-3.1-generate-001`, which only Vertex AI serves; the Gemini API's record names `gemini-omni-1.1-flash` for the same model. A tool that told a user "use veo-3.1-generate-001" sent a Gemini API key holder to a model their service does not list.
+
+**Changed**
+
+- `engine/template/tools/model_registry.json` is mirrored from Digital Marketing Pro 3.40.0: the Veo preview carries `replacement_by_backend` (`gemini-api` -> `gemini-omni-1.1-flash`, `vertex` -> `veo-3.1-generate-001`) beside the default `replacement_id`, and a `gpt-6-sol` entry joins the OpenAI models.
+- `engine/template/tools/resolve_model.py` names every replacement with its service when the entry has `replacement_by_backend`: a retired model's error and `--check` print `gemini-omni-1.1-flash (gemini-api) or veo-3.1-generate-001 (vertex)`, never a single id. CutForge itself only names a replacement (it does not call Veo), so it picks none.
+
+**Fixed**
+
+- A key could follow a redirect to another host. urllib copies a request's ordinary headers (the key's among them) to whatever host a 30x answer names, and the three paid tools (`vfx/ai_gen.py`, `voice/stt.py`, `voice/tts.py`) sent their WaveSpeed, Sarvam, ElevenLabs and OpenAI keys that way. They build their requests with `keys.keyed_request`, which adds every header with `add_unredirected_header`, so a key stays on the first request. `tests/test_keys_stay_on_the_vendor.py` answers each call with a 302 to another host (no network, no real key), shows that host every header it receives and fails if a key is among them, after proving the stub can see a key sent the old way. A scan of every shipped Python file fails on a urllib request that carries a credential header (`Authorization`, `x-api-key`, `api-subscription-key`, any other key, token or secret header, or a Bearer, Basic or Key value) outside `add_unredirected_header`; planted cases show it fires.
+- `voice/stt.py` left the audio file it uploads open.
+
+**Added**
+
+- `SECURITY.md` named 1.0.x as the supported line while the product was on 1.1.x; it names the current minor, and `tests/test_security_policy.py` fails the day the manifest version moves without it.
+- `tests/test_skill_names.py`: no skill, command or agent name carries a hidden, direction-changing or blank-like character, or `<` or `>` (Claude Code 2.1.252 to 2.1.311 stops offering such a skill). Dots stay allowed.
+- `tests/test_no_internal_references.py` also catches a session label with up to two words between "the" and the label, so a CHANGELOG that credits a working role by name fails the scan. Prose about an A/B test tool or about testers in general passes.
+- `.github/workflows/release.yml`: the GitHub release is created when the manifest version changes.
+
 ## [1.1.1] - 2026-10-27
 
 ### `--help` prints usage and runs nothing, and an unknown option exits 2
