@@ -12,7 +12,7 @@ opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
 if '--files' in a:
     files = a[a.index('--files') + 1:]
 else:
-    files = [r['path'] for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8'))
+    files = [r['path'] for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8-sig'))
              if r['kind'] in ('video', 'audio') and (not opt('--from') or r['date'][:7] >= opt('--from')) and (not opt('--to') or r['date'][:7] <= opt('--to'))]
 SR = 16000; HOP = 512; NF = 2048
 rows = []

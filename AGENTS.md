@@ -8,9 +8,9 @@ chain) and other Agent Skills runtimes. It is the equivalent of `CLAUDE.md` for 
 CutForge is an open-source video creation and editing plugin: from raw footage to final cut. It turns a client's
 photos, clips, voice notes, documents and brand assets into a finished, verified, story-led video: family and milestone
 films, tributes, weddings, brand films, explainers, ads, and pharma or BFSI videos with India-first compliance.
-**13 skills · 4 reviewer agents · a tested engine of 48 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers.**
+**13 skills · 4 reviewer agents · a tested engine of 52 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers.**
 
-**Supported surfaces (v1.0.1):** Claude Code (CLI + IDE extensions), Anthropic Cowork, OpenAI Codex (CLI + IDE + App),
+**Supported surfaces (v1.1.0):** Claude Code (CLI + IDE extensions), Anthropic Cowork, OpenAI Codex (CLI + IDE + App),
 Cursor 2.5+, GitHub Copilot CLI, Google Antigravity 2.0 (CLI + IDE), Hermes Agent, OpenClaw, Grok (xAI Build CLI, native
 `.grok-plugin/` pair).
 
@@ -33,7 +33,9 @@ Cursor 2.5+, GitHub Copilot CLI, Google Antigravity 2.0 (CLI + IDE), Hermes Agen
 3. **Project tools run inside the project**: `python film/timeline.py`, `python tools/qc/stills.py <chapter>`,
    `bash tools/render/pipeline.sh <chapter>`, `python tools/mix/film_mix.py`, `bash tools/render/assemble.sh`. The
    project's own `CLAUDE.md` lists the full pipeline.
-4. **Paid calls are gated.** Voice and AI-art tools refuse to run without a `GO_AHEAD.txt` in the project and stop at
+4. **Paid calls are quoted first.** A voice or AI-art tool run without `--go` prints a quote and exits 4, spending
+   nothing: the price comes from `tools/price_book.py`, recorded from the provider's own page, never from memory. Run
+   it again with `--go --quoted-providers <the quoted providers>` only after the client's typed go. Tools stop at
    `config.budget_inr`; every paid call is logged to `spend.md`. Keys come from environment variables or a key file,
    never from the chat.
 
@@ -70,7 +72,7 @@ Cursor 2.5+, GitHub Copilot CLI, Google Antigravity 2.0 (CLI + IDE), Hermes Agen
 - **Skills are portable** across all supported surfaces (Agent Skills open standard).
 - **Subagents are Claude-only** as `agents/*.md`; on other surfaces run the same checks by asking for an independent
   review with the agent file's instructions.
-- The engine needs Node 18+, Python 3.10+ and ffmpeg on PATH. Windows: run `.sh` files in Git Bash and set
+- The engine needs Node 22 or newer, Python 3.10 or newer (3.10 reached end of life on 2026-10-01 and still runs; use 3.11 or newer where you can) and ffmpeg on PATH. Windows: run `.sh` files in Git Bash and set
   `PYTHONUTF8=1`.
 
 ## Identity / authority

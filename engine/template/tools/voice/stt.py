@@ -1,9 +1,11 @@
 """Speech-to-text, used to verify every narration line (did the engine say what the script says?).
-providers: sarvam (Indian languages, model saarika), openai (whisper-1 / gpt-4o-transcribe). Paid calls.
+providers: sarvam (Indian languages) and openai. Paid calls. The model is the registry's choice for latest-stt-<provider>
+(tools/resolve_model.py) unless the caller names one, so a vendor's retirement of a model arrives with a registry sync.
 usage: python tools/voice/stt.py file.wav [lang]"""
 import os, sys, json, uuid, urllib.request, urllib.error
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from keys import key
+from resolve_model import model_for
 
 
 def _multipart(fields, file_field, path):
@@ -16,14 +18,25 @@ def _multipart(fields, file_field, path):
     return body, f'multipart/form-data; boundary={b}'
 
 
+def plan_item(provider, seconds, model=None):
+    """What spend.plan() needs to quote a transcription of `seconds` of audio."""
+    alias, prefix = {'sarvam': ('latest-stt-sarvam', 'https://api.sarvam.ai/'),
+                     'openai': ('latest-stt-openai', 'https://api.openai.com/v1/audio/transcriptions')}[provider]
+    return {'provider': provider, 'model': model_for(alias, model, prefix), 'unit': 'second', 'units': seconds}
+
+
 def stt(path, lang='bn-IN', provider='sarvam', model=None):
     if provider == 'sarvam':
-        body, ct = _multipart({'model': model or 'saarika:v2.5', 'language_code': lang}, 'file', path)
+        m = model_for('latest-stt-sarvam', model, 'https://api.sarvam.ai/')
+        fields = {'model': m, 'language_code': lang}
+        if m.startswith('saaras'): fields['mode'] = 'transcribe'      # saaras models take a mode; a plain transcript is "transcribe"
+        body, ct = _multipart(fields, 'file', path)
         req = urllib.request.Request('https://api.sarvam.ai/speech-to-text', data=body,
                                      headers={'api-subscription-key': key('SARVAM_API_KEY', 'SHARVAM_API_KEY'), 'Content-Type': ct})
         return json.load(urllib.request.urlopen(req, timeout=120)).get('transcript', '')
     if provider == 'openai':
-        body, ct = _multipart({'model': model or 'whisper-1', 'language': lang.split('-')[0]}, 'file', path)
+        body, ct = _multipart({'model': model_for('latest-stt-openai', model, 'https://api.openai.com/v1/audio/transcriptions'),
+                               'language': lang.split('-')[0]}, 'file', path)
         req = urllib.request.Request('https://api.openai.com/v1/audio/transcriptions', data=body,
                                      headers={'Authorization': 'Bearer ' + key('OPENAI_API_KEY'), 'Content-Type': ct})
         return json.load(urllib.request.urlopen(req, timeout=120)).get('text', '')

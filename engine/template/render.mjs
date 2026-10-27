@@ -12,8 +12,10 @@ import fs from 'fs';
 
 const [,, id, out, mode = 'video', frameArg, scaleArg] = process.argv;
 if (!id || !out) { console.error('usage: node render.mjs <chapter> <out> [video|still|chunks] [frames] [scale]'); process.exit(1); }
-const cfg = fs.existsSync('config.json') ? JSON.parse(fs.readFileSync('config.json', 'utf8')) : {};
-const tl = JSON.parse(fs.readFileSync('src/timeline.json', 'utf8'));
+// PowerShell 5.1 and Notepad write JSON with a byte-order mark, which JSON.parse rejects: strip it.
+const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, ''));
+const cfg = fs.existsSync('config.json') ? readJson('config.json') : {};
+const tl = readJson('src/timeline.json');
 const scale = Number(scaleArg || process.env.SCALE || tl.format?.scale || 1.5);
 // Browser: $REMOTION_BROWSER > config.browser_executable > a known cloud headless shell > Remotion's own download.
 const cloudShell = '/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell';

@@ -6,8 +6,9 @@ user-invocable: true
 
 # CutForge: make a story-led video, end to end
 
-> **Plugin location.** `${CLAUDE_PLUGIN_ROOT}` is this plugin's folder. If your host does not set it, use the folder
-> that contains `skills/` (two levels above this file): the engine is in `engine/`, the docs in `docs/`.
+> **Script location.** If your host does not set `${CLAUDE_PLUGIN_ROOT}`, the plugin folder is the one that contains `skills/`
+> (two levels above this file): the engine is in `engine/`, the docs in `docs/`. Run Python 3.10 or newer: `python`, or
+> `python3` where `python` is not found (macOS, many Linux systems).
 
 CutForge turns a client's material (photos, clips, documents, voice notes, brand assets) into a finished film:
 real footage first, AI only where no camera was, narration in a chosen voice, a designed soundtrack, rendered
@@ -24,8 +25,10 @@ once per project, and `${CLAUDE_PLUGIN_ROOT}/docs/case-study.md` for how it play
    in one batched round (the photo map). Face clustering sorts; only the client names people.
 3. **No AI on real faces.** No generative motion, edits or invented faces on real people, children above all.
    Generate only what no camera captured; composite real people over generated backgrounds untouched.
-4. **Budget gate.** Estimate, agree a cap, create `GO_AHEAD.txt` only after the client says go, log every paid
-   call in spend.md, stop at the cap and report.
+4. **Quote gate.** Agree a cap, then run each paid tool WITHOUT `--go`: it prints the quote (a price you read on
+   the provider's page and recorded with `tools/price_book.py`) and exits 4, spending nothing. Show the client that
+   quote, and only after their typed go run the same command with `--go --quoted-providers <the quoted providers>`.
+   Every paid call is logged in spend.md; stop at the cap and report.
 5. **Never delete or overwrite the client's files.** Work on copies; add new files in a dedicated folder.
 6. **Keys stay in files or env vars.** Never print, paste or commit a key. `tools/keys.py` reads them.
 7. **Show, don't describe.** A 30-60 s look test of the hardest scene comes before the full script. Stills
@@ -68,7 +71,7 @@ or regulated release). The client-facing review page for phases 5 and 11 is `pyt
 ## Start a project (phase 0)
 
 ```bash
-python ${CLAUDE_PLUGIN_ROOT}/engine/new_project.py "<folder>" --title "<title>" --format landscape|vertical|square \
+python "${CLAUDE_PLUGIN_ROOT}/engine/new_project.py" "<folder>" --title "<title>" --format landscape|vertical|square \
        --lang bn-IN --budget 400 --target-minutes 15 [--keys "<path to key file>"] [--demo]
 cd "<folder>" && npm install && python tools/setup_local.py
 ```

@@ -22,7 +22,7 @@ ancestors' names. Drawings must look like drawings, never like a fake memory.
 4. **One style across every tool.** Config `style_suffix` (a style sentence + five hex colours) is appended to
    every image and edit prompt automatically (motion prompts stay short and physical), so art from different
    models and days matches.
-5. **Budget gate and provenance.** Paid calls need `GO_AHEAD.txt` and stay under `config.budget_inr`; every
+5. **Quote gate and provenance.** A paid call prints its quote first (`ai_gen.py` without `--go` exits 4), runs with `--go --quoted-providers wavespeed` only after the client's go, and stays under `config.budget_inr`; every
    call is logged to `spend.md` and `out/ai_log.jsonl` (prompt, model, inputs, seed, output). Copy each used
    asset's model and licence into `sources.md`.
 6. **Licences and labels.** Check commercial terms per model and host before client work (some image-to-video

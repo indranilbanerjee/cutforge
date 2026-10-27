@@ -21,10 +21,10 @@ usage: python film/timeline.py [--quiet]
 import json, os, sys
 
 R = os.path.dirname(os.path.abspath(__file__))
-SH = json.load(open(os.path.join(R, 'shots.json'), encoding='utf-8'))
-SC = json.load(open(os.path.join(R, 'script.json'), encoding='utf-8'))
+SH = json.load(open(os.path.join(R, 'shots.json'), encoding='utf-8-sig'))
+SC = json.load(open(os.path.join(R, 'script.json'), encoding='utf-8-sig'))
 DUR_F = os.path.join(R, 'vo_durs.json')
-VO = json.load(open(DUR_F, encoding='utf-8')) if os.path.exists(DUR_F) else {}
+VO = json.load(open(DUR_F, encoding='utf-8-sig')) if os.path.exists(DUR_F) else {}
 LINES = {l['id']: l for l in SC.get('lines', [])}
 TIMING = {'id', 'vo', 'pre', 'gaps', 'post', 'min', 'fixed'}
 # speaking rate for estimates before any voice exists (characters per second, conservative)

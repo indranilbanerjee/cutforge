@@ -14,7 +14,7 @@ something is decided. Started {{DATE}}.
 - Language(s) of narration and captions:
 - Voice: (audition pending)
 - Delivery: device, resolution, file format, how it reaches the client:
-- Budget cap for paid tools: ₹        (GO_AHEAD.txt exists only after the client says go)
+- Budget cap for paid tools: ₹        (a paid run needs the client's typed go: `--go --quoted-providers ...` after the quote)
 
 ## Hard rules for this project (the client's words, verbatim where possible)
 - 

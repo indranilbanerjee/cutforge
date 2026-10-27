@@ -17,7 +17,7 @@ class TestCounts(unittest.TestCase):
                      "tools": len(engine_tools())}
 
     def test_truth_is_what_we_think(self):
-        self.assertEqual(self.truth, {"skills": 13, "reviewer agents": 4, "tools": 48})
+        self.assertEqual(self.truth, {"skills": 13, "reviewer agents": 4, "tools": 52})
 
     def test_every_stated_count(self):
         for rel in STATED_IN:
@@ -27,6 +27,12 @@ class TestCounts(unittest.TestCase):
                 for m in re.finditer(rf"(\d+) {noun}\b", text):
                     with self.subTest(file=rel, claim=m.group(0)):
                         self.assertEqual(int(m.group(1)), n)
+
+    def test_the_test_badge_matches_the_number_of_tests(self):
+        methods = sum(len(re.findall(r"(?m)^\s*def test_", p.read_text(encoding="utf-8"))) for p in (REPO / "tests").glob("test_*.py"))
+        badge = re.search(r"tests-(\d+)%2F(\d+)%20passing", (REPO / "README.md").read_text(encoding="utf-8"))
+        self.assertIsNotNone(badge, "the README test badge is missing")
+        self.assertEqual((int(badge.group(1)), int(badge.group(2))), (methods, methods), "bump the README test badge")
 
     def test_readme_skill_table_lists_every_skill(self):
         readme = (REPO / "README.md").read_text(encoding="utf-8")

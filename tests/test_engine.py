@@ -15,6 +15,7 @@ import py_compile
 import shutil
 import struct
 import subprocess
+import tempfile
 import unittest
 import wave
 from pathlib import Path
@@ -35,7 +36,12 @@ class TestEngineSources(unittest.TestCase):
                 with self.subTest(tool=p.name):
                     self.assertRegex(p.read_text(encoding="utf-8").splitlines()[0], r"^#!/bin/(ba)?sh$")
                     if has_cmd("bash"):
-                        self.assertEqual(subprocess.run(["bash", "-n", str(p)]).returncode, 0)
+                        # new_project.py writes .sh files with LF whatever the checkout did (autocrlf), so check that form.
+                        # shutil.which finds Git's bash; the bare name "bash" can resolve to Windows' WSL launcher, which fails.
+                        lf = Path(tempfile.mkdtemp()) / p.name
+                        lf.write_bytes(p.read_bytes().replace(b"\r\n", b"\n"))
+                        done = subprocess.run([shutil.which("bash"), "-n", str(lf)], capture_output=True, text=True)
+                        self.assertEqual(done.returncode, 0, done.stderr)
 
     @unittest.skipUnless(has_cmd("node"), "node not installed")
     def test_node_scripts_parse(self):

@@ -4,18 +4,18 @@
 
 Say "make a film from our photos" and CutForge runs the job the way an editor would: brief, archive research, story, a look test, a storyboard the client ticks once, verified narration, designed sound, a code-built render, nine QC layers, delivery and revision rounds. Every time in the film is derived from the measured narration, so a re-recorded line re-times its scene by itself. Every fix re-renders one chapter, not the whole film.
 
-Open-source video creation and editing plugin, **from raw footage to final cut**: **13 skills · 4 reviewer agents · a tested engine of 48 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers**. Built from a real 20-minute production and every mistake made in it. Installs on **Claude Code** (CLI + IDE), **Anthropic Cowork**, **OpenAI Codex**, **Cursor 2.5+**, **GitHub Copilot CLI**, **Google Antigravity 2.0**, **Hermes Agent**, **OpenClaw** and **Grok**, plus 35+ Agent Skills platforms. Created by [Indranil Banerjee](https://indranil.in) · [LinkedIn](https://www.linkedin.com/in/askneelnow/) · [X](https://x.com/askneelnow).
+Open-source video creation and editing plugin, **from raw footage to final cut**: **13 skills · 4 reviewer agents · a tested engine of 52 tools (Remotion, ffmpeg, Python) · 0 hooks · 0 MCP servers**. Built from a real 20-minute production and every mistake made in it. Installs on **Claude Code** (CLI + IDE), **Anthropic Cowork**, **OpenAI Codex**, **Cursor 2.5+**, **GitHub Copilot CLI**, **Google Antigravity 2.0**, **Hermes Agent**, **OpenClaw** and **Grok**, plus 35+ Agent Skills platforms. Created by [Indranil Banerjee](https://indranil.in) · [LinkedIn](https://www.linkedin.com/in/askneelnow/) · [X](https://x.com/askneelnow).
 
-[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/indranilbanerjee/cutforge?style=flat&logo=github&color=yellow)](https://github.com/indranilbanerjee/cutforge/stargazers)
-[![Tests](https://img.shields.io/badge/tests-53%2F53%20passing-brightgreen.svg)](tests/)
-[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v101)
+[![Tests](https://img.shields.io/badge/tests-146%2F146%20passing-brightgreen.svg)](tests/)
+[![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v110)
 [![Engine](https://img.shields.io/badge/engine-Remotion%20%2B%20ffmpeg%20%2B%20Python-orange.svg)](#the-engine)
 
 [![Built by Indranil "Neel" Banerjee, Neelverse plugin suite. Sponsor this project](docs/assets/author-banner.svg)](https://github.com/sponsors/indranilbanerjee)
 
-> 🆕 **Just shipped: v1.0.1 (October 17, 2026). CutForge installs cleanly on Hermes Agent: one source line no longer looks like hidden text to its install-time scanner, and a guard keeps it that way. v1.0.0, the first public release, has 13 skills, 4 reviewer agents and an engine proven end to end on a real production.** [Current release](#current-release-v101) · [Changelog](CHANGELOG.md)
+> 🆕 **Just shipped: v1.1.0 (October 27, 2026). Paid calls are quoted first, the speech models come from the registry, and setup checks what it needs.** A paid tool run without `--go` prints a quote and spends nothing; the price is read from the provider's own page, never remembered. The voice and transcription tools no longer carry model ids that vendors are shutting down. [Changelog](CHANGELOG.md)
 
 ```bash
 # Install in Claude Code:
@@ -65,7 +65,7 @@ Install, then ask in plain words. Each of these requests reaches the right skill
 
 - **Put AI on a real person's face.** No generative edits, motion or invented faces on real people, children above all. AI goes only where no camera was, and a face guard refuses inputs that contain a face.
 - **Guess who someone is.** Face clustering sorts; only you name people. Identities, relations, rituals, dates and quotes are confirmed in one batched round.
-- **Spend on a paid voice or AI service before you say go.** Paid tools refuse to run without a `GO_AHEAD.txt` and stop at your cap; every call is logged.
+- **Spend on a paid voice or AI service before you say go.** Paid tools print a quote first (prices read from the provider's own page, never remembered) and run only after your typed go, within your cap; every call is logged.
 - **Clone a voice without its owner's consent,** or clone someone who has died (their real recordings are used instead).
 - **Delete or overwrite your files.** It works on copies and adds new files in a dedicated folder.
 - **Ask for an API key in the chat.** Keys come from environment variables or a key file.
@@ -99,7 +99,7 @@ The amber steps are yours: the brief, the story, the look, the photo map, the bu
    /plugin install cutforge@neels-plugins
    ```
 
-   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v101).
+   In Cowork, use the Plugins panel instead (Add marketplace, paste `indranilbanerjee/neels-plugins`, install CutForge). Other hosts are under [Supported surfaces](#supported-surfaces-v110).
 2. **Prove the toolchain once.** Ask "start a CutForge demo project in D:/Films/demo", or run it yourself:
 
    ```bash
@@ -162,14 +162,14 @@ Four agents review work they did not build: `story-editor`, `film-qc-reviewer`, 
 - **Look:** an ffmpeg grade (3D LUT, halation, vignette, grain) with presets warm, pop, neutral, bw and doc.
 - **QC:** timeline checks, audio drops, dead air and loudness, still sheets with safe zones, frame and decode verification, story chronology, cast and reuse, a time-to-shot lookup, and the storyboard and photo-map page with saved notes.
 - **Archive:** inventory with EXIF, GPS and rotation, stats, contact sheets, clip strips, real-sound events, face clusters (YuNet + SFace) and OpenCLIP semantic search.
-- **VFX:** Depth Anything V2 Small depth maps and parallax plates, person cut-outs, perspective straightening, hosted AI image and video with a budget gate, a face guard and a provenance log, motion-interpolated retiming.
+- **VFX:** Depth Anything V2 Small depth maps and parallax plates, person cut-outs, perspective straightening, hosted AI image and video with a quote gate, a face guard and a provenance log, motion-interpolated retiming.
 - **Delivery:** encode presets (projector, YouTube, Reels, WhatsApp, broadcast, archive) with two-pass loudness, verified resumable parts, resumable copies, lossless chapter recovery from a delivered master.
 
 ## Proven on a real production
 
 CutForge was distilled from a 20-minute storybook film built end to end by Claude: seven look tests, two full cuts, 131 narration lines verified one by one, ten chapters rendered in resumable chunks and a 3.3 GB master delivered over a slow link. [`docs/lessons-learned.md`](docs/lessons-learned.md) records every mistake and the rule that now prevents it; [`docs/case-study.md`](docs/case-study.md) tells the production phase by phase, anonymised.
 
-## Supported surfaces (v1.0.1)
+## Supported surfaces (v1.1.0)
 
 | Platform | Install command | Manifest path | Status |
 |---|---|---|---|
@@ -195,7 +195,7 @@ CutForge was distilled from a 20-minute storybook film built end to end by Claud
 
 ## Requirements
 
-- Node 18+, Python 3.10+, ffmpeg and ffprobe on PATH. On Windows, Git Bash for the `.sh` scripts and `setx PYTHONUTF8 1` once.
+- Node 22 or newer, Python 3.10 or newer (3.10 reached end of life on 2026-10-01 and still runs; use 3.11 or newer where you can), ffmpeg and ffprobe on PATH. On Windows, Git Bash for the `.sh` scripts and `setx PYTHONUTF8 1` once.
 - Python packages: numpy, soundfile, pedalboard, pyloudnorm, rapidfuzz, opencv-python, pillow, scipy (`python tools/setup_local.py` lists anything missing). Optional: onnxruntime (depth, faces), rembg (cut-outs), open_clip_torch + torch (semantic search).
 - Disk: 15-25 GB of working space for a 20-minute 1080p film. Put projects on a data drive.
 
@@ -207,7 +207,9 @@ CutForge was distilled from a 20-minute storybook film built end to end by Claud
 ```
 Projects keep their own copy of the engine, so an update never changes a film in progress. To bring a fix into a project, copy the changed tool from `engine/template/` into it.
 
-## Current Release (v1.0.1)
+## Current Release (v1.1.0)
+
+**v1.1.0:** paid calls are quoted first, the speech models come from the registry, and setup checks what it needs. A paid tool (`gen_vo.py`, `audition.py`, `import_vo.py --verify`, `ai_gen.py`) run without `--go` prints a quote and exits 4; the price comes from `tools/price_book.py`, recorded from the provider's page and expiring after a week, and a run with `--go` must name the quoted providers. `GO_AHEAD.txt`, which an agent can create, is no longer read. Narration and transcription take their model from the registry: Sarvam's transcription default was one the vendor's reference no longer lists, and OpenAI is shutting down every speech model on 2027-01-06 with a replacement that runs only on a Realtime API this tool does not call, so the `openai` voice now refuses unless you name a model. Setup requires Node 22, checks ffmpeg and the Remotion pin, and `install_deps.py` prints pinned pip commands. Windows clones no longer hand a project shell scripts with CRLF line ends, and files saved with a byte-order mark load. The four agent descriptions are one sentence each (always-on cost from about 2,212 tokens to about 825).
 
 **v1.0.1:** an install fix for Hermes Agent. The voice tool held two invisible joiner characters in its source, which an install-time security scanner reads as hidden text; they are now written as escape codes, and a new guard checks every shipped file against the scanner's patterns.
 

@@ -12,7 +12,7 @@ def key(name, *aliases):
             return os.environ[n].strip()
     f = CFG.get('api_keys_file')
     if f and os.path.exists(f):
-        for line in open(f, encoding='utf-8', errors='ignore'):
+        for line in open(f, encoding='utf-8-sig', errors='ignore'):
             s = line.strip()
             for n in (name,) + aliases:
                 if s.startswith(n) and re.match(rf'^{re.escape(n)}\s*[=:]', s):

@@ -14,7 +14,7 @@ import os, json, sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(TOOLS, '..'))
 CFG_PATH = os.environ.get('CUTFORGE_CONFIG') or os.path.join(ROOT, 'config.json')
-CFG = json.load(open(CFG_PATH, encoding='utf-8')) if os.path.exists(CFG_PATH) else {}
+CFG = json.load(open(CFG_PATH, encoding='utf-8-sig')) if os.path.exists(CFG_PATH) else {}
 
 FILM = os.path.join(ROOT, 'film')
 PUBLIC = os.path.join(ROOT, 'public')
@@ -36,7 +36,7 @@ def rel(*parts):
 
 
 def load_json(path, default=None):
-    return json.load(open(path, encoding='utf-8')) if os.path.exists(path) else default
+    return json.load(open(path, encoding='utf-8-sig')) if os.path.exists(path) else default
 
 
 def save_json(path, obj, indent=1):

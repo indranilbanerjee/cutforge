@@ -16,7 +16,7 @@ SH = load_json(os.path.join(FILM, 'shots.json'))
 inv_p = os.path.join(OUT, 'archive', 'inventory.csv')
 dates = {}
 if os.path.exists(inv_p):
-    for r in csv.DictReader(open(inv_p, encoding='utf-8')):
+    for r in csv.DictReader(open(inv_p, encoding='utf-8-sig')):
         if r.get('date'): dates[os.path.splitext(os.path.basename(r['path']))[0].lower()] = r['date'][:10]
 people = load_json(os.path.join(FILM, 'people_in_media.json'), {})
 
@@ -41,7 +41,7 @@ for c_tl, c_sh in zip(TL['chapters'], SH['chapters']):
             prev = (d, os.path.basename(m))
 for m, where in uses.items():
     if len(where) > 1: issues.append(f'REUSE {os.path.basename(m)} in {", ".join(where)}')
-facts = open(os.path.join(ROOT, 'facts.md'), encoding='utf-8').read() if os.path.exists(os.path.join(ROOT, 'facts.md')) else ''
+facts = open(os.path.join(ROOT, 'facts.md'), encoding='utf-8-sig').read() if os.path.exists(os.path.join(ROOT, 'facts.md')) else ''
 named = re.findall(r'^\s*-\s*\*\*(.+?)\*\*', facts, re.M)      # people map lines look like: - **Name**: relation, what the hero calls them
 for p in named:
     if people and cast[p] == 0: issues.append(f'CAST {p} is in the people map but on screen for 0 s')

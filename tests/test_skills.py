@@ -69,12 +69,21 @@ class TestAgents(unittest.TestCase):
         agents = sorted(AGENTS.glob("*.md"))
         self.assertEqual(len(agents), 4)
         for a in agents:
-            text = a.read_text(encoding="utf-8")
-            head = text.split("\n---\n", 1)[0]
+            text = a.read_text(encoding="utf-8").replace("\r\n", "\n")
+            head, body = text.split("\n---\n", 1)
             with self.subTest(agent=a.name):
                 self.assertIn(f"name: {a.stem}", head)
-                for key in ("description:", "model:", "color:", "tools:", "<example>", "<commentary>"):
+                for key in ("description:", "model:", "color:", "tools:"):
                     self.assertIn(key, head)
+                # The host lists every agent's description in every session, so it is one short sentence; the long form
+                # and its examples live in the body, where they cost nothing until the agent runs.
+                self.assertNotIn("<example>", head, "examples in the description cost ~400 tokens per agent in every session")
+                description = re.search(r'^description: "(.*)"$', head, re.M)
+                self.assertIsNotNone(description, "description must be one quoted line")
+                self.assertTrue(100 <= len(description.group(1)) <= 146, len(description.group(1)))
+                self.assertIn("## When to delegate", body)
+                for key in ("<example>", "<commentary>"):
+                    self.assertIn(key, body)
 
 
 if __name__ == "__main__":

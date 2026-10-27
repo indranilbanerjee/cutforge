@@ -1,7 +1,7 @@
 {
   "name": "cutforge",
   "displayName": "CutForge",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Open-source video creation and editing plugin: your photos, clips and voice notes become story-led films, brand films, explainers and ads. 13 skills, 4 reviewer agents, a tested Remotion engine. Runs on Claude Code, Codex, Cursor, Antigravity.",
   "author": {
     "name": "Indranil Banerjee",

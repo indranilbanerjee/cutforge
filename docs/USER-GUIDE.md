@@ -5,7 +5,7 @@ CutForge's skills decide what happens next and the engine does the heavy lifting
 
 ## 1. Before you start
 
-- Install the plugin (see the README), then make sure the machine has Node 18+, Python 3.10+ and ffmpeg.
+- Install the plugin (see the README), then make sure the machine has Node 22 or newer, Python 3.10 or newer (3.10 reached end of life on 2026-10-01 and still runs; use 3.11 or newer where you can) and ffmpeg.
 - Prove the toolchain once with the demo: "start a CutForge demo project in D:/Films/demo". It scaffolds a project,
   renders a one-minute film from procedural media and verifies every frame. If anything is missing,
   `python tools/setup_local.py` inside the project says exactly what.
@@ -51,7 +51,7 @@ This one round replaces twenty scattered questions.
 - **Voice:** an audition page with the same six lines in several voices. Pick by ear on your phone. Every generated line
   is transcribed back and compared with the script; names that come out wrong get a respelling for the engine while the
   captions keep the right spelling. Your own voice can be cloned only with your consent, or recorded and imported.
-- **Art:** only where no camera was, never on a real face. Paid generation waits for your go and stops at the cap.
+- **Art:** only where no camera was, never on a real face. Paid generation shows you a quote first (priced from the provider's own page, never from memory), waits for your typed go, and stops at the cap.
 - **Sound:** your own clips and recordings first, then licensed libraries, then synthesis. The music is chosen first and
   the picture is cut to its phrases. Every chapter boundary gets a sound bridge.
 

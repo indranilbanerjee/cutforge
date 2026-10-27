@@ -11,7 +11,7 @@
 | `claims.md` | marketing claims with substantiation and approver (marketing-video) | script work; before release |
 | `sources.md` | every quote, track, effect, stock clip, font, AI model: source and licence | when an item enters the film |
 | `spend.md` | every paid call (written by tools/spend.py) | automatically |
-| `GO_AHEAD.txt` | exists only after the client approved spending | once |
+| `price_book.json` | prices read from the providers' own pages, each with its source and date; a price expires after a week | when a paid tool asks for a quote |
 | `NOTES_vN.md` | the client's review notes for version N, mapped to shots, with fixes | each review round |
 | `config.json` | title, slug, client folders, key file path, budget, loudness, renderer settings | setup; when folders move |
 | `film/shots.json` | structure: format, chapters, shots, layouts, media, timing knobs | story/storyboard work |

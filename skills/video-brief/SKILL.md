@@ -68,7 +68,7 @@ project folder is the memory.
 - [ ] brief.md written; PROJECT.md one-screen brief and hard rules filled; client said yes
 - [ ] facts.md seeded with sources; open questions listed (to batch into the photo map round)
 - [ ] inbox/ folders with READMEs; client knows the deadline for their inputs
-- [ ] config.json folders set; budget cap recorded; GO_AHEAD.txt NOT created yet
+- [ ] config.json folders set; budget cap recorded; no paid tool run with --go yet
 - [ ] delivery device recorded with its limits (resolution, codecs, file system, speaker)
 
 ## References

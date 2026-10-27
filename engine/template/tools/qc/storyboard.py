@@ -32,7 +32,7 @@ OUTF = os.path.join(ROOT, opt('--out', os.path.join('out', 'storyboard', 'index.
 dates = {}
 inv = os.path.join(OUT, 'archive', 'inventory.csv')
 if os.path.exists(inv):
-    for r in csv.DictReader(open(inv, encoding='utf-8')):
+    for r in csv.DictReader(open(inv, encoding='utf-8-sig')):
         if r.get('date'):
             dates[os.path.splitext(os.path.basename(r['path']))[0].lower()] = (r['date'][:16], r.get('date_src', ''))
 

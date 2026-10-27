@@ -121,7 +121,7 @@ if __name__ == '__main__':
     if not roots: sys.exit(__doc__)
     old = {}
     if os.path.exists(out):
-        for r in csv.DictReader(open(out, encoding='utf-8')): old[(r['path'], r['bytes'], r['mtime'])] = r
+        for r in csv.DictReader(open(out, encoding='utf-8-sig')): old[(r['path'], r['bytes'], r['mtime'])] = r
     files = [os.path.join(dp, f) for root in roots for dp, _, fs in os.walk(root) for f in fs if not f.startswith('.')]
     rows, todo = [], []
     for p in files:

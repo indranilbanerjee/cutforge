@@ -21,9 +21,9 @@ Avoid:     <announcer voice, sing-song, over-acting, a celebrity imitation>
   "lines": ["1A", "4C", "6D", "7Da", "9H", "13A"],
   "name_tests": ["<hero name spelling 1>", "<spelling 2>", "<spelling 3>"],
   "candidates": [
-    {"name": "voice A, v3", "provider": "sarvam", "voice": "<speaker>", "model": "bulbul:v3", "lang": "bn-IN"},
-    {"name": "voice B, v3", "provider": "sarvam", "voice": "<speaker>", "model": "bulbul:v3", "lang": "bn-IN"},
-    {"name": "multilingual", "provider": "elevenlabs", "voice": "<voice_id>", "model": "eleven_multilingual_v2"}
+    {"name": "voice A", "provider": "sarvam", "voice": "<speaker>", "lang": "bn-IN"},
+    {"name": "voice B", "provider": "sarvam", "voice": "<speaker>", "lang": "bn-IN"},
+    {"name": "multilingual", "provider": "elevenlabs", "voice": "<voice_id>"}
   ]
 }
 ```

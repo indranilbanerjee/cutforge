@@ -3,7 +3,7 @@ painted behind them: the "painted sea comes alive behind the real child" composi
 usage: python tools/vfx/cutout.py photo.jpg [--model u2net_human_seg|u2net|isnet-general-use] [--out public/media]
        -> <stem>_cut.png (RGBA) and <stem>_bg.jpg (the background with the person filled in, for animating)
 Models: u2net / u2net_human_seg are Apache-2.0. Never use bria-rmbg (RMBG-2.0) without a commercial licence.
-Needs: pip install rembg (first run downloads the model)."""
+Needs the cutouts group: python tools/install_deps.py --groups cutouts  (prints the pinned command; the first run downloads the model)."""
 import os, sys, numpy as np, cv2
 from PIL import Image, ImageOps
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))

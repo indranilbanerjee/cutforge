@@ -6,7 +6,8 @@ for things, places and moments, and confirm every hit by eye.
 usage: python tools/archive/search.py index [--from 2023-01] [--to 2026-12]        (once; resumable, cached)
        python tools/archive/search.py "a red motorbike" "sky lanterns at night" [--k 24] [--from ...] [--to ...]
 writes out/archive/clip_index.npz and out/archive/search/<query>.jpg (+ .csv with file, date, score)
-Needs: pip install open_clip_torch torch  (CPU is fine; ~10 min per 1,000 photos on 2 cores to index).
+Needs the archive-search group: python tools/install_deps.py --groups archive-search  (prints the pinned command; CPU is fine;
+~10 min per 1,000 photos on 2 cores to index).
 Model: ViT-B-32 laion2b_s34b_b79k (OpenCLIP, MIT code; weights downloaded from Hugging Face on first use)."""
 import os, sys, csv, io, re, subprocess, numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -29,7 +30,7 @@ torch.set_num_threads(max(1, (os.cpu_count() or 2)))
 model, _, pre = open_clip.create_model_and_transforms('ViT-B-32', pretrained='laion2b_s34b_b79k')
 model.eval(); tok = open_clip.get_tokenizer('ViT-B-32')
 
-rows = [r for r in csv.DictReader(open(INV, encoding='utf-8')) if r.get('kind') in ('photo', 'video')
+rows = [r for r in csv.DictReader(open(INV, encoding='utf-8-sig')) if r.get('kind') in ('photo', 'video')
         and FROM <= (r.get('date') or '')[:7] <= TO]
 
 

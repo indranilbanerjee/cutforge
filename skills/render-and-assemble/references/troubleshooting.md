@@ -21,11 +21,11 @@
 | Windows render slow to start | Remotion copies `public/` into the bundle (no symlinks on Windows) | normal; keep `public/` to what the film uses |
 | ffmpeg inside a shell loop eats input | ffmpeg reads stdin | always `-nostdin` (all tools do) |
 | `pgrep -f` finds itself / kills the wrong job | pattern matches the pgrep command | use a pid file or a more specific pattern |
-| "No space left on device" | chunks, parts and bundles pile up | delete chunks after concat, transfer parts after verify, `/tmp/remotion-*`; keep graded chapters only |
+| "No space left on device" | chunks, parts and bundles pile up | delete chunks after concat, transfer parts after verify, the `remotion-*` folders Remotion leaves in the system temp folder; keep graded chapters only |
 | Model download fails (GitHub raw blocked) | proxy rules | `tools/fetch_models.py` uses media.githubusercontent.com and Hugging Face URLs, verified by md5 |
 | OpenCV Haar cascade missing | new wheels drop data files | the tools use YuNet (downloaded model), not Haar |
 | Upload to an AI host fails with SSL EOF | input too large | downscale to max side ~2048 and retry |
-| Paid tool refuses to run | no `GO_AHEAD.txt` or cap reached | that is the budget gate working: ask the client, then create the file / raise the cap in config |
+| Paid tool exits 4 and runs nothing | no fresh price, no `--go`, a provider missing from `--quoted-providers`, or the cap reached | that is the quote gate working: record the price (`tools/price_book.py record`), show the client the quote, rerun with `--go --quoted-providers ...` after their go, or raise the cap in config |
 | Audio QC: DEAD AIR at a chapter end | silence between a sound ending and the next chapter | add a ring-out or pre-lap; room tone must be on |
 | Audio QC: CUT TAIL after a cut | a cue's fade-out shorter than the minimum, or `hard=True` | remove `hard=True`, lengthen `fo` |
 | Audio early or late in later chapters after a fix | stems mixed against an old timeline | film_mix re-mixes chapters whose start/length moved; if in doubt run `film_mix.py` with no args |

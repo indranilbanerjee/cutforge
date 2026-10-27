@@ -5,7 +5,8 @@ it "recorded" in film/vo_check.json so tools/voice/gen_vo.py never overwrites it
 usage: python tools/voice/import_vo.py <file or folder> [...] [--verify]
 File names start with the script line id: 7Da.wav, 7Da_take2.m4a, 7Da-final.mp3 (text after _ or - is ignored).
 With several takes for one id, the file listed last (or sorted last in a folder) wins: pass exact files to choose.
---verify transcribes each take back and fuzzy-matches it to the script like generated lines (paid STT: budget gate).
+--verify transcribes each take back and fuzzy-matches it to the script like generated lines (paid STT: the quote gate; without
+--go it prints the quote and exits 4, then add --go --quoted-providers <the quoted provider> after the client's go).
 Then: python film/timeline.py"""
 import os, sys, re, subprocess, numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -15,7 +16,8 @@ from gen_vo import S, CHK, CHK_F, TARGET, THRESH, V, LANG, STT_PROVIDER, trim, n
 
 AUD = ('.wav', '.mp3', '.m4a', '.aac', '.flac', '.ogg', '.opus', '.webm', '.mp4', '.mov')
 ids = {l['id']: l for l in S['lines']}
-a = sys.argv[1:]
+import spend
+GO, QUOTED, a = spend.parse_flags(sys.argv[1:])
 files = []
 for x in [x for x in a if not x.startswith('--')]:
     if os.path.isdir(x):
@@ -30,6 +32,14 @@ for f in files:
     if lid not in ids: print('  ? no script line for', os.path.basename(f)); continue
     pick[lid] = f
 os.makedirs(VO_DIR, exist_ok=True)
+PLAN = None
+if '--verify' in a and pick:
+    import stt as STT
+    def seconds(path):
+        r = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', path], capture_output=True, text=True)
+        try: return float(r.stdout.strip())
+        except ValueError: return 30.0              # undecodable here; it is skipped below, and 30 s keeps the quote on the high side
+    PLAN = spend.plan_or_exit('stt', [STT.plan_item(STT_PROVIDER, sum(seconds(f) for f in pick.values()))], GO, QUOTED)
 for lid, f in pick.items():
     r = subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', f, '-vn', '-ac', '1', '-ar', '48000', '-f', 'f32le', '-'], capture_output=True)
     if r.returncode or not r.stdout: print('  ! cannot decode', f); continue
@@ -48,19 +58,16 @@ for lid, f in pick.items():
            'lufs': None if not np.isfinite(L) else round(float(L), 1), 'sim': None, 'heard': 'RECORDED'}
     if '--verify' in a:
         try:
-            from spend import gate, log
-            gate('stt', 0.5)
-            import stt as STT
             from rapidfuzz import fuzz
             heard = STT.stt(out, LANG, STT_PROVIDER) or ''
             res.update({'heard': heard, 'sim': fuzz.ratio(norm(ids[lid]['text']), norm(heard))})
-            log('stt', STT_PROVIDER, f'verify recorded {lid}', 0.5)
         except Exception as e:
             res['stt_err'] = str(e)[:120]
     CHK[lid] = res
     sim = res.get('sim')
     print(f"{lid:8} {res['dur']:>6}s  from {res['source']}" + (f'  sim {sim}' + ('  CHECK' if sim is not None and sim < THRESH else '') if sim is not None else ''))
 save_json(CHK_F, CHK)
+if PLAN: spend.log_plan('stt', PLAN, f'verify {len(pick)} recorded lines')
 durs = {l['id']: CHK[l['id']]['dur'] for l in S['lines'] if CHK.get(l['id'], {}).get('ok')}
 save_json(os.path.join(FILM, 'vo_durs.json'), durs, indent=0)
 print(f'imported {len(pick)} recorded lines; next: python film/timeline.py')

@@ -32,12 +32,16 @@ talent release for any human voice; disclose synthetic voices where the platform
    the brief is how you pick the closest voice and direct it.
 2. **Audition.** Six lines that stress the engine (one funny, one tender, one list, one name-heavy, one long
    sentence, the emotional peak) plus the hero's name in 3 spellings. Write `film/audition.json`, run
-   `python tools/voice/audition.py film/audition.json` (paid providers pass the budget gate) and send
+   `python tools/voice/audition.py film/audition.json` (paid providers are quoted first: run it without `--go` to see the quote, and add `--go --quoted-providers <providers>` after the client's go) and send
    `out/audition/index.html` (publish it as an artifact) so the client listens on a phone. Real history: a
    five-voice audition, then a three-engine audition, then the client cloned his own voice and that won.
 3. **Set the voice** in `film/script.json` `"voice"`: `provider` (`sarvam`, `sarvam_clone`, `elevenlabs`,
-   `openai`, `placeholder`), `voice`, `model`, `lang`, `pace_scale`, `lufs` (-18), `verify_threshold` (85), `stt_provider`,
-   `inr_per_1k_chars` (from the provider's current price, used by the budget gate).
+   `openai`, `placeholder`), `voice`, `lang`, `pace_scale`, `lufs` (-18), `verify_threshold` (85), `stt_provider`, and
+   optionally `model`: leave it out and the registry's pick for that provider is used (`python tools/resolve_model.py
+   --alias latest-tts-<provider>`), so a vendor's shutdown reaches you with a registry sync. OpenAI's speech models
+   are being shut down on a date the registry records and its replacement runs only on a Realtime API this tool does not
+   call, so the `openai` voice needs an explicit `model` until that is built. Prices are not a setting: record each
+   one with `tools/price_book.py` from the provider's pricing page; the quote reads it.
 4. **Pronunciation layer.** `film/respell.json` maps caption spellings to engine spellings (names, loanwords,
    numerals, abbreviations). Invisible joiners (ZWNJ/ZWJ) are stripped for the engine by default (one engine read
    a joiner as an extra syllable). Keys starting with `_` are comments.

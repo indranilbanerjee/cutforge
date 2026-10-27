@@ -22,7 +22,7 @@ Everyone is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 2. Make the change, following the standards below.
 3. Run the test suite: `python tests/run_all.py` (stdlib only; engine tests skip cleanly when numpy or ffmpeg are
    missing).
-4. For engine changes, scaffold the demo and render it: `python engine/new_project.py /tmp/demo --title Demo --demo`,
+4. For engine changes, scaffold the demo and render it: `python engine/new_project.py "<a new folder outside this repository>" --title Demo --demo`,
    then follow the README Quick Start inside it.
 5. Open the PR with a clear description and the PR checklist filled in.
 

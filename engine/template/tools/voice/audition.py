@@ -2,24 +2,27 @@
 Pick lines that stress the engine: one funny, one tender, one list, one name-heavy, one long sentence, the emotional peak.
 usage: python tools/voice/audition.py film/audition.json
 audition.json: {"lines": ["1A", "3B", ...] or [{"id": "x", "text": "..."}],
-                "candidates": [{"name": "ratan v3", "provider": "sarvam", "voice": "ratan", "model": "bulbul:v3", "lang": "bn-IN"}, ...],
+                "candidates": [{"name": "ratan", "provider": "sarvam", "voice": "ratan", "lang": "bn-IN"}, ...],
                 "name_tests": ["<the hero's name in 3 spellings>"]}
-writes out/audition/<candidate>/<line>.wav and out/audition/index.html. Paid providers pass the budget gate."""
+writes out/audition/<candidate>/<line>.wav and out/audition/index.html. Paid providers pass the quote gate: without --go it
+prints the quote and exits 4; after the client's go, add --go --quoted-providers <the quoted providers>."""
 import os, sys, json, html
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from paths import FILM, OUT, load_json
 import tts as T
 
-A = load_json(sys.argv[1] if len(sys.argv) > 1 else os.path.join(FILM, 'audition.json'))
+import spend
+GO, QUOTED, ARGV = spend.parse_flags(sys.argv[1:])
+A = load_json(ARGV[0] if ARGV else os.path.join(FILM, 'audition.json'))
 S = load_json(os.path.join(FILM, 'script.json'), {'lines': []})
 by_id = {l['id']: l for l in S['lines']}
 lines = [by_id[x] if isinstance(x, str) else x for x in A['lines']] + [{'id': f'name{k}', 'text': t, 'dir': 'plain'} for k, t in enumerate(A.get('name_tests', []))]
 paid = [c for c in A['candidates'] if c.get('provider') in T.PAID]
+PLAN = None
 if paid:
-    from spend import gate, log
-    est = sum(len(l['text']) for l in lines) / 1000 * 3.0 * len(paid)
-    gate('audition', est)
+    chars = sum(len(l['text']) for l in lines)
+    PLAN = spend.plan_or_exit('audition', [T.plan_item(c, chars) for c in paid], GO, QUOTED)
 root = os.path.join(OUT, 'audition'); os.makedirs(root, exist_ok=True)
 rows = []
 for c in A['candidates']:
@@ -30,7 +33,7 @@ for c in A['candidates']:
             try: T.tts(f, l['text'], c, c.get('pace', 0.88), l.get('dir', ''))
             except Exception as e: print(c['name'], l['id'], 'failed:', str(e)[:120]); continue
         rows.append((c['name'], l, os.path.relpath(f, root)))
-if paid: log('audition', ','.join(c['name'] for c in paid), f'{len(lines)} lines x {len(paid)} voices', est)
+if PLAN: spend.log_plan('audition', PLAN, f'{len(lines)} lines x {len(paid)} voices')
 cells = {}
 for name, l, rel in rows: cells.setdefault(l['id'], {})[name] = rel
 names = [c['name'] for c in A['candidates']]

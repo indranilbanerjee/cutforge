@@ -2,18 +2,24 @@
 voice_cfg comes from film/script.json "voice": {"provider": ..., "voice": ..., "model": ..., "lang": ...}
 
 providers
-  sarvam        Sarvam bulbul (Indian languages). voice = speaker name (e.g. a bulbul:v3 speaker), model = "bulbul:v3"
+  sarvam        Sarvam (Indian languages). voice = speaker name, which must match the model
   sarvam_clone  Sarvam cloned voice. voice = the clone's voice id. ONLY with the voice owner's own consent.
-  elevenlabs    ElevenLabs. voice = voice_id, model = e.g. "eleven_multilingual_v2" (or a newer one)
-  openai        OpenAI speech. voice = e.g. "alloy", model = e.g. "gpt-4o-mini-tts"; `direction` is sent as instructions
+  elevenlabs    ElevenLabs. voice = voice_id
+  openai        OpenAI speech. voice = a voice name; `direction` is sent as instructions. The registry's current OpenAI
+                text-to-speech model runs only on the Realtime API, which this tool does not call: with no "model" in the voice
+                settings this provider refuses and says why. A "model" you name yourself still works until OpenAI shuts the
+                /v1/audio/speech endpoint down (2027-01-06 per the registry).
   placeholder   no audio service: writes silence of the estimated length so timing, captions and the mix work early
+"model" in the voice settings is optional: without it the model is the registry's choice for latest-tts-<provider>
+(tools/resolve_model.py), so a shutdown or a new default arrives with a registry sync, not a code edit.
 Keys (env or key file): SARVAM_API_KEY (alias SHARVAM_API_KEY), ELEVENLABS_API_KEY, OPENAI_API_KEY.
 APIs change: if a provider errors, read its current docs before changing anything else (field names drift).
-Every call here is a paid call except placeholder: the caller must pass the budget gate (tools/spend.py)."""
+Every call here is a paid call except placeholder: the caller must pass the quote gate (tools/spend.py plan())."""
 import os, sys, json, base64, uuid, urllib.request, urllib.error, io
 import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from keys import key
+from resolve_model import model_for
 
 SR = 48000
 
@@ -40,7 +46,8 @@ def _to_wav(raw, out, sr_hint=None):
 
 
 def sarvam(out, text, v, pace):
-    body = {'text': text, 'target_language_code': v.get('lang', 'bn-IN'), 'speaker': v['voice'], 'model': v.get('model', 'bulbul:v3'),
+    body = {'text': text, 'target_language_code': v.get('lang', 'bn-IN'), 'speaker': v['voice'],
+            'model': model_for('latest-tts-sarvam', v.get('model'), 'https://api.sarvam.ai/'),
             'pace': pace, 'speech_sample_rate': int(v.get('sr', 24000))}
     if v.get('temperature') is not None: body['temperature'] = v['temperature']
     r = json.loads(_post('https://api.sarvam.ai/text-to-speech', json.dumps(body).encode(),
@@ -61,7 +68,7 @@ def sarvam_clone(out, text, v, pace):
 
 
 def elevenlabs(out, text, v, pace):
-    body = {'text': text, 'model_id': v.get('model', 'eleven_multilingual_v2'),
+    body = {'text': text, 'model_id': model_for('latest-tts-elevenlabs', v.get('model'), 'https://api.elevenlabs.io/'),
             'voice_settings': {'stability': v.get('stability', 0.45), 'similarity_boost': 0.8, 'speed': max(0.7, min(1.2, pace))}}
     raw = _post(f'https://api.elevenlabs.io/v1/text-to-speech/{v["voice"]}?output_format=pcm_44100', json.dumps(body).encode(),
                 {'xi-api-key': key('ELEVENLABS_API_KEY'), 'Content-Type': 'application/json'})
@@ -69,7 +76,8 @@ def elevenlabs(out, text, v, pace):
 
 
 def openai(out, text, v, pace, direction=''):
-    body = {'model': v.get('model', 'gpt-4o-mini-tts'), 'voice': v.get('voice', 'alloy'), 'input': text, 'response_format': 'wav',
+    body = {'model': model_for('latest-tts-openai', v.get('model'), 'https://api.openai.com/v1/audio/speech'),
+            'voice': v.get('voice', 'alloy'), 'input': text, 'response_format': 'wav',
             'speed': max(0.25, min(4.0, pace))}
     if direction or v.get('style'): body['instructions'] = (v.get('style', '') + ' ' + direction).strip()
     raw = _post('https://api.openai.com/v1/audio/speech', json.dumps(body).encode(),
@@ -86,6 +94,21 @@ def placeholder(out, text, v, pace):
 
 PROVIDERS = {'sarvam': sarvam, 'sarvam_clone': sarvam_clone, 'elevenlabs': elevenlabs, 'openai': openai, 'placeholder': placeholder}
 PAID = {'sarvam', 'sarvam_clone', 'elevenlabs', 'openai'}
+
+
+BILLING = {'sarvam': ('sarvam', 'latest-tts-sarvam'), 'elevenlabs': ('elevenlabs', 'latest-tts-elevenlabs'),
+           'openai': ('openai', 'latest-tts-openai')}
+
+
+def plan_item(v, chars):
+    """What spend.plan() needs to quote this voice for `chars` characters: provider, the model it would call, unit, units."""
+    p = v.get('provider')
+    if p == 'sarvam_clone':
+        return {'provider': 'sarvam', 'model': 'voices/clone', 'unit': 'character', 'units': chars}
+    name, alias = BILLING[p]
+    prefix = {'sarvam': 'https://api.sarvam.ai/', 'elevenlabs': 'https://api.elevenlabs.io/',
+              'openai': 'https://api.openai.com/v1/audio/speech'}[p]
+    return {'provider': name, 'model': model_for(alias, v.get('model'), prefix), 'unit': 'character', 'units': chars}
 
 
 def tts(out, text, v, pace=1.0, direction=''):

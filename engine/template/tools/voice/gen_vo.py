@@ -12,7 +12,9 @@ Rules this enforces (from real productions):
   - every line is transcribed back and fuzzy-matched; below the threshold it is listed as CHECK (listen, respell, regenerate
     BY ID: a bare run skips lines that were generated, even with low similarity); a failed STT is listed as UNVERIFIED
   - voice.stt_provider: "sarvam" (default for Indian languages) or "openai" (default otherwise)
-  - paid providers pass the budget gate first (GO_AHEAD.txt + config.budget_inr)"""
+  - paid providers pass the quote gate first: a run WITHOUT --go prints the quote (from tools/price_book.py) and exits 4,
+    spending nothing; after the client's typed go, run the same command with --go --quoted-providers <the quoted providers>
+    (tools/spend.py explains the flow; the cap is config.budget_inr)"""
 import os, sys, json, re, time, shutil, concurrent.futures as cf
 import numpy as np, soundfile as sf
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -26,7 +28,6 @@ RESPELL = load_json(os.path.join(FILM, 'respell.json'), {})
 CHK_F = os.path.join(FILM, 'vo_check.json'); CHK = load_json(CHK_F, {})
 TARGET = float(V.get('lufs', -18.0))
 THRESH = float(V.get('verify_threshold', 85))
-COST_PER_1K_CHARS = float(V.get('inr_per_1k_chars', 3.0))     # set from the provider's price; used by the budget gate
 INDIC = {'bn', 'hi', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa', 'or', 'od', 'as', 'ur'}
 LANG = V.get('lang') or S.get('language') or 'en-IN'
 STT_PROVIDER = V.get('stt_provider') or ('sarvam' if LANG.split('-')[0] in INDIC else 'openai')
@@ -101,7 +102,9 @@ def one(line):
 
 
 if __name__ == '__main__':
-    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    import spend
+    GO, QUOTED, ARGV = spend.parse_flags(sys.argv[1:])
+    args = [a for a in ARGV if not a.startswith('--')]
     os.makedirs(os.path.join(VO_DIR, '_raw'), exist_ok=True)
     if '--all' in sys.argv and os.listdir(VO_DIR):
         prev = os.path.join(SOUND, 'vo_prev'); os.makedirs(prev, exist_ok=True)
@@ -110,10 +113,14 @@ if __name__ == '__main__':
     rec = {k for k, v in CHK.items() if v.get('provider') == 'recorded'}      # human takes (import_vo.py): never overwritten
     lines = [l for l in S['lines'] if (l['id'] in args) or ('--all' in sys.argv and l['id'] not in rec) or
              (not args and l['id'] not in rec and not (CHK.get(l['id'], {}).get('ok') and (CHK[l['id']].get('provider') == V.get('provider'))))]
+    PLAN = None
     if V.get('provider') in T.PAID and lines:
-        from spend import gate, log
-        chars = sum(len(l['text']) for l in lines); est = chars / 1000 * COST_PER_1K_CHARS * (2 if V.get('verify', True) else 1)
-        gate('tts:' + V['provider'], est)
+        import stt as STT
+        chars = sum(len(l['text']) for l in lines)
+        items = [T.plan_item(V, chars)]
+        if V.get('verify', True):          # each line is transcribed back; about 12 characters are spoken per second (an estimate)
+            items.append(STT.plan_item(STT_PROVIDER, chars / 12.0))
+        PLAN = spend.plan_or_exit('tts:' + V['provider'], items, GO, QUOTED)
     print('generating', len(lines), 'lines with', V.get('provider'))
     with cf.ThreadPoolExecutor(int(V.get('threads', 3))) as ex:
         for lid, r in ex.map(one, lines):
@@ -121,8 +128,8 @@ if __name__ == '__main__':
             sim = r.get('sim')
             flag = '' if (sim is None or sim >= THRESH) else f'CHECK heard: {r.get("heard", "")[:80]}'
             print(f"{lid:8} {r.get('dur', '-'):>6}s  sim {sim}  {flag or r.get('err', '')}")
-    if V.get('provider') in T.PAID and lines:
-        log('tts:' + V['provider'], V.get('model', ''), f'{len(lines)} lines', est)
+    if PLAN:
+        spend.log_plan('tts:' + V['provider'], PLAN, f'{len(lines)} lines')
     durs = {l['id']: CHK[l['id']]['dur'] for l in S['lines'] if CHK.get(l['id'], {}).get('ok')}
     save_json(os.path.join(FILM, 'vo_durs.json'), durs, indent=0)
     low = [k for k, v in CHK.items() if v.get('ok') and v.get('sim') is not None and v['sim'] < THRESH]

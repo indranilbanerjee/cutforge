@@ -12,7 +12,7 @@ opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
 if '--files' in a:
     vids = [{'path': p, 'date': '', 'dur': ''} for p in a[a.index('--files') + 1:]]
 else:
-    vids = [r for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8')) if r['kind'] == 'video'
+    vids = [r for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8-sig')) if r['kind'] == 'video'
             and (not opt('--from') or r['date'][:7] >= opt('--from')) and (not opt('--to') or r['date'][:7] <= opt('--to'))
             and float(r.get('dur') or 0) >= float(opt('--min', 0))]
 d = os.path.join(OUT, 'archive', 'strips'); os.makedirs(d, exist_ok=True)

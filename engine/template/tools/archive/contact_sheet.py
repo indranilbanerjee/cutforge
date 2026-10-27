@@ -11,9 +11,9 @@ from paths import OUT, PUBLIC
 a = sys.argv[1:]
 opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
 inv = os.path.join(OUT, 'archive', 'inventory.csv')
-rows = list(csv.DictReader(open(inv, encoding='utf-8')))
+rows = list(csv.DictReader(open(inv, encoding='utf-8-sig')))
 if opt('--list'):
-    want = [l.strip() for l in open(opt('--list'), encoding='utf-8') if l.strip()]
+    want = [l.strip() for l in open(opt('--list'), encoding='utf-8-sig') if l.strip()]
     by = {r['path']: r for r in rows}; groups = {opt('--name', 'list'): [by.get(p, {'path': p, 'kind': 'photo', 'date': '', 'dur': ''}) for p in want]}
 else:
     n = 7 if opt('--by', 'month') == 'month' else 10

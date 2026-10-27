@@ -19,8 +19,8 @@ likeness-preserving style transfer.
 ## Network endpoints and credentials
 
 Nothing connects on install: there are no hooks and no MCP servers. A CutForge tool opens a network connection only
-when you, or a skill you invoked, run it, and only to the endpoints below. Paid calls also need a `GO_AHEAD.txt` in the
-project and stay under its budget cap.
+when you, or a skill you invoked, run it, and only to the endpoints below. Paid calls print a quote first and run only with
+`--go` after the client's typed go; they stay under the project's budget cap.
 
 | What | When | Endpoint | Credential |
 |---|---|---|---|
@@ -28,6 +28,7 @@ project and stay under its budget cap.
 | `tools/voice/stt.py` (used by `gen_vo.py`, `import_vo.py --verify`) | when narration is verified by speech-to-text | `api.sarvam.ai` (speech-to-text), `api.openai.com` (transcriptions) | the same keys |
 | `tools/vfx/ai_gen.py` | when you approve an AI image or video for a shot with no camera footage | `api.wavespeed.ai` | `WAVESPEED_API_KEY` |
 | `tools/fetch_models.py` | once per machine, when you fetch the face and depth models | `media.githubusercontent.com` (OpenCV Zoo YuNet and SFace), `huggingface.co` (Depth Anything V2 Small); files are verified by md5 | none |
+| `tools/install_deps.py` | only when you pass `--install`; without it the tool prints the exact pinned command and stops | PyPI, exact pinned versions | none |
 | `tools/vfx/cutout.py` | first use, when the optional `rembg` package is installed | rembg downloads its model weights | none |
 | `tools/archive/search.py` | first use, when the optional `open_clip_torch` package is installed | Hugging Face (OpenCLIP weights) | none |
 | `npm install`, `render.mjs` | project setup; first render when no browser is configured | the npm registry; Remotion downloads Chrome Headless Shell unless `browser_executable` is set | none |

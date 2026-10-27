@@ -96,7 +96,7 @@ def render(spec, out=None):
     return out
 
 if __name__ == '__main__':
-    specs = json.load(open(sys.argv[1], encoding='utf-8'))
+    specs = json.load(open(sys.argv[1], encoding='utf-8-sig'))
     only = set(sys.argv[2].split(',')) if len(sys.argv) > 2 else None
     for s in specs:
         if only and s['id'] not in only: continue

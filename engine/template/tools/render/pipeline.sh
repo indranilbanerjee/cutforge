@@ -24,7 +24,8 @@ for c in $CHS; do
   [ $ok = 1 ] || { echo "    $c FAILED, see out/ch/$c.log" >> out/ch/queue.log; continue; }
   (cd "out/ch/$c" && ls p_*.mp4 | sort | sed "s/^/file '/; s/$/'/" > list.txt && ffmpeg -nostdin -v error -y -f concat -safe 0 -i list.txt -c copy "../$c.mp4") \
     && rm -f "out/ch/$c"/p_*.mp4 && echo "    $c joined $(date +%H:%M:%S)" >> out/ch/queue.log
-  rm -rf /tmp/remotion-webpack-bundle-* /tmp/remotion-v4.0.*-assets* 2>/dev/null
+  RT="${TMPDIR:-$([ -n "$TEMP" ] && cygpath -u "$TEMP" 2>/dev/null || echo /tmp )}"   # the system temp folder, whichever shell this is
+  rm -rf "$RT"/remotion-webpack-bundle-* "$RT"/remotion-v4.0.*-assets* 2>/dev/null
   ($PY tools/grade/grade.py "out/ch/$c.mp4" "out/ch/${c}_f.tmp.mp4" "$PRESET" >> out/ch/grade.log 2>&1 \
     && mv "out/ch/${c}_f.tmp.mp4" "out/ch/${c}_f.mp4" && echo "graded $c $(date +%H:%M:%S)" >> out/ch/queue.log) &
 done

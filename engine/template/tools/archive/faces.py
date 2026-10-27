@@ -36,7 +36,7 @@ def load_img(r):
 if cmd == 'scan':
     det = cv2.FaceDetectorYN.create(model('yunet'), '', (320, 320), 0.85, 0.3, 5000)
     rec = cv2.FaceRecognizerSF.create(model('sface'), '')
-    rows = [r for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8'))
+    rows = [r for r in csv.DictReader(open(os.path.join(OUT, 'archive', 'inventory.csv'), encoding='utf-8-sig'))
             if r['kind'] in ('photo', 'video') and (not opt('--kind') or r['kind'] == opt('--kind'))
             and (not opt('--from') or r['date'][:7] >= opt('--from')) and (not opt('--to') or r['date'][:7] <= opt('--to'))]
     faces, embs = [], []

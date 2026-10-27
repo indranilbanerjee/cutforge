@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from paths import OUT
 
 inv = sys.argv[1] if len(sys.argv) > 1 else os.path.join(OUT, 'archive', 'inventory.csv')
-rows = list(csv.DictReader(open(inv, encoding='utf-8')))
+rows = list(csv.DictReader(open(inv, encoding='utf-8-sig')))
 dated = [r for r in rows if not r['date_src'].startswith('mtime')]
 month = collections.Counter((r['date'][:7], r['kind']) for r in dated)
 months = sorted({m for m, _ in month})

@@ -1,5 +1,6 @@
 """AI image and video generation through a hosted API (WaveSpeed by default), with the production rules built in:
-  1. Budget gate: refuses without GO_AHEAD.txt or past config.budget_inr; logs every call to spend.md.
+  1. Quote gate: without --go it prints the quote (tools/price_book.py has the price, read from the host's page) and exits 4;
+     after the client's go, rerun with --go --quoted-providers wavespeed. Refuses past config.budget_inr; logs to spend.md.
   2. Face guard: refuses to send an input image with a detectable face to an edit or image-to-video model.
      AI goes only where no camera was. To style-transfer a real photo (e.g. an oil-portrait look) pass
      --allow-face-likeness: then compare faces before/after by eye and reject any change of likeness.
@@ -9,16 +10,16 @@ Licences differ per model and per host (commercial use, watermarks, required cre
 docs/compliance-and-licensing.md before client work.
 
 usage:
-  python tools/vfx/ai_gen.py image  <model path> out.png "prompt" [--inr 8] [--param k=v ...]
+  python tools/vfx/ai_gen.py image  <model path> out.png "prompt" [--go --quoted-providers wavespeed] [--param k=v ...]
   python tools/vfx/ai_gen.py edit   <model path> out.png "prompt" --image in.jpg [--allow-face-likeness]
   python tools/vfx/ai_gen.py video  <model path> out.mp4 "motion prompt" --image plate.png [--param duration=5]
-  <model path> is the host's model route, e.g. "google/nano-banana/edit" or a Kling image-to-video route; check the
-  host's model page for the exact path and parameters (they change). Key: WAVESPEED_API_KEY (or WAVE_SPEED_API_KEY)."""
+  <model path> is the host's model route (<vendor>/<model>/<endpoint>): take it from the host's model page, with its parameters
+  and price, because both change. Key: WAVESPEED_API_KEY (or WAVE_SPEED_API_KEY)."""
 import os, sys, json, time, base64, urllib.request, urllib.error
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from paths import OUT, CFG
 from keys import key
-from spend import gate, log
+import spend
 
 API = 'https://api.wavespeed.ai/api/v3/'
 
@@ -43,9 +44,8 @@ def has_face(p):
         print('face guard could not run:', e, '-> treating as "may contain a face"'); return True
 
 
-def run(model, body, out, inr, note=''):
+def run(model, body, out, the_plan, note=''):
     hdr = {'Authorization': 'Bearer ' + key('WAVESPEED_API_KEY', 'WAVE_SPEED_API_KEY'), 'Content-Type': 'application/json'}
-    gate('ai_gen', inr)
     try:
         r = json.load(urllib.request.urlopen(urllib.request.Request(API + model, data=json.dumps(body).encode(), headers=hdr), timeout=180))
     except urllib.error.HTTPError as e:
@@ -56,14 +56,14 @@ def run(model, body, out, inr, note=''):
         q = json.load(urllib.request.urlopen(urllib.request.Request(f'{API}predictions/{pid}/result', headers=hdr), timeout=60))['data']
         if q['status'] == 'completed':
             urllib.request.urlretrieve(q['outputs'][0], out)
-            log('ai_gen', model, note or os.path.basename(out), inr)
+            spend.log_plan('ai_gen', the_plan, note or os.path.basename(out))
             return out
         if q['status'] == 'failed': raise RuntimeError(q.get('error'))
     raise TimeoutError(pid)
 
 
 if __name__ == '__main__':
-    a = sys.argv[1:]
+    GO, QUOTED, a = spend.parse_flags(sys.argv[1:])
     if len(a) < 4: sys.exit(__doc__)
     mode, model, out, prompt = a[:4]
     opt = lambda k, d=None: a[a.index(k) + 1] if k in a else d
@@ -83,10 +83,12 @@ if __name__ == '__main__':
                      'animate only the background, and composite the untouched person back on top.')
         if mode == 'edit': body['images'] = [data_url(img)]
         else: body['image'] = data_url(img)
-    inr = float(opt('--inr', 10))
-    res = run(model, body, out, inr, opt('--note', ''))
+    if '--inr' in a: print('note: --inr is ignored; the price comes from tools/price_book.py', file=sys.stderr)
+    unit, units = ('second', float(params.get('duration', 5))) if mode == 'video' else ('image', 1.0)
+    the_plan = spend.plan_or_exit('ai_gen', [{'provider': 'wavespeed', 'model': model, 'unit': unit, 'units': units}], GO, QUOTED)
+    res = run(model, body, out, the_plan, opt('--note', ''))
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, 'ai_log.jsonl'), 'a', encoding='utf-8') as f:
         f.write(json.dumps({'t': time.strftime('%Y-%m-%d %H:%M'), 'mode': mode, 'model': model, 'prompt': body['prompt'], 'params': params,
-                            'input': img, 'output': res, 'inr': inr}, ensure_ascii=False) + '\n')
+                            'input': img, 'output': res, 'quote': the_plan['totals']}, ensure_ascii=False) + '\n')
     print('saved', res, '| log: out/ai_log.jsonl | add the licence line to sources.md')

@@ -30,7 +30,7 @@ In scope:
 - The plugin itself: skills, agents, manifests and the Hermes adapter
 - The engine in `engine/` (any path traversal, command injection or unsafe deserialization in the Python, shell or
   Node tools, including what a scaffolded project runs)
-- The budget gate (`tools/spend.py`) and the face guard (`tools/vfx/ai_gen.py`): a way to bypass either is in scope
+- The quote gate (`tools/spend.py`, `tools/price_book.py`) and the face guard (`tools/vfx/ai_gen.py`): a way to bypass either is in scope
 
 Out of scope:
 - Vulnerabilities in Claude Code, Cowork or other hosts (report to their vendors)
@@ -45,6 +45,6 @@ Out of scope:
    project's `config.json`; keep that file outside the project folder and never commit it.
 2. **Treat client material as personal data.** Projects hold family photos, children's faces, voices and documents.
    Apply the folder permissions you would to any client PII, and delete working copies when the job ends.
-3. **Keep the budget gate on.** Create `GO_AHEAD.txt` only after the client approves spend, and keep `budget_inr` set.
+3. **Keep the quote gate on.** Run a paid tool with `--go` only after the client approves its quote, and keep `budget_inr` set.
 4. **Review skill and tool changes in PRs** like production code: skills run with whatever permissions your host has.
 5. **Pin the plugin version** for client work and update between jobs, not during one.
