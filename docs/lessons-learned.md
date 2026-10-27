@@ -40,6 +40,7 @@ recording (drones, bells, abstract tones) and make those carefully.
 A6 ★ **Budget gate before any paid call.** A spend cap was stated up front, paid calls were logged
 one per line in `spend.md`, and scripts refused to call paid APIs unless a `GO_AHEAD.txt` existed.
 Final spend: about two-thirds of the cap. Rule: estimate, cap, log every call, stop and report at the cap.
+*Since 1.1.0 a file no longer counts as the go, because an agent can create one: a paid tool prints a quote and runs only with `--go` and `--quoted-providers` after the client's typed go.*
 
 A7 **Back-plan from the event.** The premiere date was fixed and a festival ate the production week.
 Rule: lock everything only the client can give (recordings, letters, photos, identity answers) by a

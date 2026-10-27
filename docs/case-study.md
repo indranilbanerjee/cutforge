@@ -91,4 +91,4 @@ next chapter. Those findings became CutForge's timing checks, minimum fade-outs,
 | A mispronounced name | the respell layer and speech-to-text verification of every line |
 | Hours-long renders, reboots, full disks | chapters, resumable chunks, FRESH, cleanup, a watcher |
 | Slow links | verified parts, rebuild on the far side, the project hand-off |
-| Spend creep risk | the budget gate (GO_AHEAD.txt, a cap, spend.md) |
+| Spend creep risk | the quote gate: a quote from a price read on the provider's own page, the client's typed go (`--go --quoted-providers ...`), a cap, spend.md |
