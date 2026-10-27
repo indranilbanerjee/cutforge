@@ -52,6 +52,15 @@ def _d(value):
     return date.fromisoformat(value[:10]) if value else None
 
 
+def replacement_text(m):
+    """What the registry names as a model's replacement. An entry whose replacement depends on the service a request goes to
+    (replacement_by_backend) names every one with its service, never a single id that only one service serves."""
+    by_backend = m.get('replacement_by_backend') or {}
+    if by_backend:
+        return ' or '.join(f'{rep} ({name})' for name, rep in sorted(by_backend.items()))
+    return m.get('replacement_id')
+
+
 def resolve_for_execution(alias_or_id, endpoint_prefix=None, allow_expired=None):
     """The model to call for `alias_or_id`, with provenance and warnings, or a ModelError that says what to do."""
     reg = load()
@@ -65,10 +74,10 @@ def resolve_for_execution(alias_or_id, endpoint_prefix=None, allow_expired=None)
     status = m.get('status', 'current')
     shutdown = _d(m.get('shutdown_date'))
     if status == 'retired' or (shutdown and shutdown <= now):
-        raise ModelError(f'{model_id} is retired (shut down {shutdown or "already"}); use {m.get("replacement_id") or "a current model"}')
+        raise ModelError(f'{model_id} is retired (shut down {shutdown or "already"}); use {replacement_text(m) or "a current model"}')
     if status == 'deprecated' or shutdown:
         when = f' and shuts down {shutdown}' if shutdown else ''
-        warnings.append(f'{model_id} is {status}{when}; the registry names {m.get("replacement_id") or "no replacement"}')
+        warnings.append(f'{model_id} is {status}{when}; the registry names {replacement_text(m) or "no replacement"}')
         if shutdown and (shutdown - now).days <= SHUTDOWN_WARN_DAYS:
             warnings.append(f'{model_id} shuts down in {(shutdown - now).days} days')
     expires = _d(m.get('pin_expires'))
@@ -124,7 +133,7 @@ def main(argv=None):
         if m is None:
             print(f'{args.check}: unknown'); return 1
         status = m.get('status', 'current')
-        print(f'{args.check}: {status}' + (f' (use {m["replacement_id"]})' if m.get('replacement_id') else ''))
+        print(f'{args.check}: {status}' + (f' (use {replacement_text(m)})' if replacement_text(m) else ''))
         return 0 if status in ('current', 'supported') else 1
     except ModelError as e:
         print(f'resolve_model.py: {e}', file=sys.stderr)

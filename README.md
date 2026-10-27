@@ -9,7 +9,7 @@ Open-source video creation and editing plugin, **from raw footage to final cut**
 [![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/indranilbanerjee/cutforge?style=flat&logo=github&color=yellow)](https://github.com/indranilbanerjee/cutforge/stargazers)
-[![Tests](https://img.shields.io/badge/tests-156%2F156%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-171%2F171%20passing-brightgreen.svg)](tests/)
 [![Platforms](https://img.shields.io/badge/platforms-9%20native%20%2B%2035%20Agent%20Skills-success.svg)](#supported-surfaces-v111)
 [![Engine](https://img.shields.io/badge/engine-Remotion%20%2B%20ffmpeg%20%2B%20Python-orange.svg)](#the-engine)
 

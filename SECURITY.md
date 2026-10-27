@@ -6,7 +6,9 @@ The latest minor release of CutForge receives security fixes. Please update befo
 
 | Version | Supported |
 |---------|-----------|
-| 1.0.x   | ✅ |
+| 1.1.x   | ✅ |
+| 1.0.x   | ⚠️ Security fixes only when trivially backportable |
+| < 1.0   | ❌ Please upgrade |
 
 ## Reporting a Vulnerability
 

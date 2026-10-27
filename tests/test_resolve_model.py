@@ -130,6 +130,23 @@ class TestResolverCommandLine(unittest.TestCase):
         self.assertEqual(self.run_cli("--alias", "latest-stt-sarvam", CUTFORGE_MODEL_REGISTRY=str(TOOLS / "nope.json")).returncode, 2)
         self.assertEqual(self.run_cli().returncode, 2, "no action is a bad argument")
 
+    def test_a_retired_id_with_a_backend_dependent_replacement_names_every_one(self):
+        """1.1.2: veo-3.1-generate-preview's replacement is gemini-omni-1.1-flash on the Gemini API and veo-3.1-generate-001 on
+        Vertex AI (the registry's replacement_by_backend). Naming only replacement_id sent a Gemini API reader to a Vertex-only id."""
+        out = self.run_cli("--check", "veo-3.1-generate-preview")
+        self.assertEqual(out.returncode, 1)
+        self.assertIn("gemini-omni-1.1-flash (gemini-api)", out.stdout)
+        self.assertIn("veo-3.1-generate-001 (vertex)", out.stdout)
+        refused = self.run_cli("--alias", "veo-3.1-generate-preview")
+        self.assertEqual(refused.returncode, 3, refused.stdout + refused.stderr)
+        self.assertIn("gemini-omni-1.1-flash (gemini-api)", refused.stderr)
+
+    def test_an_entry_with_one_replacement_is_named_as_before(self):
+        entry = next(m for m in REGISTRY["models"] if m.get("replacement_id") and not m.get("replacement_by_backend")
+                     and m.get("status") in ("deprecated", "retired"))
+        self.assertEqual(rm.replacement_text(entry), entry["replacement_id"])
+        self.assertEqual(rm.replacement_text({"id": "x"}), None)
+
     def test_json_output_carries_provenance(self):
         out = json.loads(self.run_cli("--alias", "latest-stt-sarvam", "--json").stdout)
         self.assertEqual(out["model"], REGISTRY["aliases"]["latest-stt-sarvam"])
